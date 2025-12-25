@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>Voice Finance Analyzer</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            direction: rtl;
+            text-align: center;
+            padding: 50px;
+        }
+        #status {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        pre {
+            text-align: left;
+            display: inline-block;
+            background: #f2f2f2;
+            padding: 15px;
+            border-radius: 8px;
+            max-width: 90%;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>تسجيل صوت وتحليل المصاريف</h2>
+
+    <button id="recordBtn">🎤 بدء التسجيل</button>
+    <button id="stopBtn" disabled>🛑 إيقاف</button>
+
+    <p id="status"></p>
+    <pre id="result"></pre>
+
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+
+        const recordBtn = document.getElementById("recordBtn");
+        const stopBtn = document.getElementById("stopBtn");
+        const statusText = document.getElementById("status");
+        const resultBox = document.getElementById("result");
+
+        // ----------- بدء التسجيل -----------
+        recordBtn.onclick = async () => {
+            audioChunks = [];
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+            mediaRecorder = new MediaRecorder(stream);
+            mediaRecorder.start();
+
+            statusText.innerText = "🎙️ جاري التسجيل...";
+            recordBtn.disabled = true;
+            stopBtn.disabled = false;
+
+            mediaRecorder.ondataavailable = e => {
+                audioChunks.push(e.data);
+            };
+        };
+
+        // ----------- إيقاف التسجيل وإرسال الصوت -----------
+        stopBtn.onclick = async () => {
+            mediaRecorder.stop();
+
+            statusText.innerText = "⏳ جاري رفع الصوت وتحليله...";
+            recordBtn.disabled = false;
+            stopBtn.disabled = true;
+
+            mediaRecorder.onstop = async () => {
+                const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
+                const formData = new FormData();
+                formData.append("file", audioBlob, "voice.webm");
+
+                try {
+                    const res = await fetch("http://127.0.0.1:8000/voice", {
+                        method: "POST",
+                        body: formData
+                    });
+
+                    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
+                    const data = await res.json();
+                    statusText.innerText = "✔️ تم التحليل";
+
+                    // عرض JSON بشكل مرتب داخل <pre>
+                    resultBox.innerText = JSON.stringify(data, null, 2);
+
+                } catch (err) {
+                    statusText.innerText = "❌ حدث خطأ أثناء التحليل";
+                    resultBox.innerText = err;
+                }
+            };
+        };
+    </script>
+
+</body>
+</html>
