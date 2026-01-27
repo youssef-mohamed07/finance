@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, UploadFile, File, HTTPException, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from groq import Groq
 from ai_model import call_openai_extract  # اختياري لو عايزة تحلي النصوص بطريقة OpenAI
@@ -14,12 +15,22 @@ from ai_model import call_openai_extract  # اختياري لو عايزة تح�
 load_dotenv()
 GROQ_KEY = os.getenv("GROQ_API_KEY")
 if not GROQ_KEY:
-    raise Exception("GROQ_API_KEY missing")
+    raise Exception("❌ GROQ_API_KEY missing. Add it to your .env file")
 
 groq_client = Groq(api_key=GROQ_KEY)
 
 # ---------- App ----------
 app = FastAPI(title="Voice & Text Finance Analyzer")
+
+# ---------- CORS -----------
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 templates = Jinja2Templates(directory="templates")
 
 # ---------- Home ----------
@@ -57,35 +68,34 @@ def analyze_text(input: TextInput):
             temperature=0
         )
         output = response.choices[0].message.content
-        # تأكد من استخراج JSON فقط
         start = output.find("{")
         end = output.rfind("}")
         parsed = json.loads(output[start:end+1])
         return {"analysis": parsed}
     except Exception as e:
-        raise HTTPException(status_code=500, detail="Text analysis failed: " + str(e))
+        raise HTTPException(status_code=500, detail=f"Text analysis failed: {str(e)}")
 
 # ---------- Voice Analyze ----------
 @app.post("/voice")
 async def analyze_voice(file: UploadFile = File(...)):
     audio_bytes = await file.read()
     if not audio_bytes:
-        raise HTTPException(status_code=400, detail="Empty audio")
+        raise HTTPException(status_code=400, detail="❌ Empty audio")
 
-    # 1️⃣ Speech → Text (مع تحويل الصوت لـ BytesIO)
     try:
         audio_file = io.BytesIO(audio_bytes)
         audio_file.name = file.filename or "voice.webm"
 
+        # Transcription
         transcript = groq_client.audio.transcriptions.create(
             model="whisper-large-v3-turbo",
             file=audio_file
         )
         text = transcript.text
     except Exception as e:
-        raise HTTPException(status_code=500, detail="STT failed: " + str(e))
+        raise HTTPException(status_code=500, detail=f"STT failed: {str(e)}")
 
-    # 2️⃣ Text → Finance Analysis
+    # Text → Finance Analysis
     prompt = FINANCE_PROMPT.format(text=text)
     try:
         response = groq_client.chat.completions.create(
@@ -102,10 +112,10 @@ async def analyze_voice(file: UploadFile = File(...)):
             "analysis": parsed
         }
     except Exception as e:
-        raise HTTPException(status_code=500, detail="Analysis failed: " + str(e))
+        raise HTTPException(status_code=500, detail=f"Analysis failed: {str(e)}")
 
 # ---------- Run Server ----------
 if __name__ == "__main__":
     import uvicorn
-    port = int(os.environ.get("PORT", 8000))  # Railway هتبعتلك PORT
+    port = int(os.environ.get("PORT", 8000))
     uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)
