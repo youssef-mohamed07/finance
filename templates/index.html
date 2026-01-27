@@ -75,7 +75,8 @@
                 formData.append("file", audioBlob, "voice.webm");
 
                 try {
-                    const res = await fetch("http://127.0.0.1:8000/voice", {
+                    // استخدم رابط نسبي بدل 127.0.0.1
+                    const res = await fetch("/voice", {
                         method: "POST",
                         body: formData
                     });
