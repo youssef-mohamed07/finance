@@ -9,7 +9,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from groq import Groq
-# from ai_model import call_openai_extract  # لو عايزة تحلي النصوص بطريقة OpenAI
+from pydub import AudioSegment  # <-- Added
 
 # ---------- Load ENV ----------
 load_dotenv()
@@ -22,10 +22,10 @@ groq_client = Groq(api_key=GROQ_KEY)
 # ---------- App ----------
 app = FastAPI(title="Voice & Text Finance Analyzer")
 
-# ---------- CORS -----------
+# ---------- CORS ----------
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # لو حابة تحددي دومين معين استبدلي هنا
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -44,7 +44,7 @@ class TextInput(BaseModel):
 
 FINANCE_PROMPT = """
 حلل الجملة التالية من حيث البيانات المالية فقط.
-ارجع JSON فقط بالشكل التالي:
+ارجع JSON بالشكل التالي فقط:
 
 {{
   "amount": <number|null>,
@@ -71,37 +71,45 @@ def analyze_text(input: TextInput):
         start = output.find("{")
         end = output.rfind("}")
         parsed = json.loads(output[start:end+1])
+        print("Text Analysis successful:", parsed)
         return {"analysis": parsed}
     except Exception as e:
         print("Text Analysis Error:", e)
         raise HTTPException(status_code=500, detail="Text analysis failed: " + str(e))
 
-# ---------- Voice Analyze ----------
+# ---------- Voice Analyze (Modified) ----------
 @app.post("/voice")
 async def analyze_voice(file: UploadFile = File(...)):
-    audio_bytes = await file.read()
-    if not audio_bytes:
-        raise HTTPException(status_code=400, detail="Empty audio")
-
     try:
-        audio_file = io.BytesIO(audio_bytes)
-        audio_file.name = file.filename or "voice.webm"
-        print(f"Processing audio file: {audio_file.name} ({len(audio_bytes)} bytes)")
+        audio_bytes = await file.read()
+        if not audio_bytes:
+            raise HTTPException(status_code=400, detail="Empty audio")
 
+        print(f"Original audio file: {file.filename} ({len(audio_bytes)} bytes)")
+
+        # ---------- Convert audio to WAV 16kHz mono ----------
+        audio = AudioSegment.from_file(io.BytesIO(audio_bytes))
+        audio = audio.set_channels(1).set_frame_rate(16000)
+
+        buffer = io.BytesIO()
+        audio.export(buffer, format="wav")
+        buffer.seek(0)
+        buffer.name = "voice.wav"
+
+        audio_file = buffer
+        print(f"Audio converted to WAV 16kHz mono: {audio_file.name}")
+
+        # ---------- Transcription with Arabic language ----------
         transcript = groq_client.audio.transcriptions.create(
             model="whisper-large-v3-turbo",
-            file=audio_file
+            file=audio_file,
+            language="ar"  # <-- مهم
         )
         text = transcript.text
         print("Transcription successful:", text)
 
-    except Exception as e:
-        print("STT Error:", e)
-        raise HTTPException(status_code=500, detail="STT failed: " + str(e))
-
-    # Text → Finance Analysis
-    prompt = FINANCE_PROMPT.format(text=text)
-    try:
+        # ---------- Text → Finance Analysis ----------
+        prompt = FINANCE_PROMPT.format(text=text)
         response = groq_client.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[{"role": "user", "content": prompt}],
@@ -111,15 +119,13 @@ async def analyze_voice(file: UploadFile = File(...)):
         start = output.find("{")
         end = output.rfind("}")
         parsed = json.loads(output[start:end+1])
-        print("Analysis successful:", parsed)
+        print("Voice Analysis successful:", parsed)
 
-        return {
-            "text": text,
-            "analysis": parsed
-        }
+        return {"text": text, "analysis": parsed}
+
     except Exception as e:
-        print("Analysis Error:", e)
-        raise HTTPException(status_code=500, detail="Analysis failed: " + str(e))
+        print("VOICE ANALYSIS ERROR:", e)
+        raise HTTPException(status_code=500, detail="Voice analysis failed: " + str(e))
 
 # ---------- Run Server ----------
 if __name__ == "__main__":
