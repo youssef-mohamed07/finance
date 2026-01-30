@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from groq import Groq
 from pydub import AudioSegment
+from pydub.utils import which  # ✅ مهم لتحديد ffmpeg/ffprobe
 
 # ---------- Load ENV ----------
 load_dotenv()
@@ -18,6 +19,10 @@ if not GROQ_KEY:
     raise Exception("GROQ_API_KEY missing")
 
 groq_client = Groq(api_key=GROQ_KEY)
+
+# ---------- Setup FFmpeg for Railway ----------
+AudioSegment.converter = which("ffmpeg")
+AudioSegment.ffprobe = which("ffprobe")
 
 # ---------- App ----------
 app = FastAPI(title="Voice & Text Finance Analyzer")
