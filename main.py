@@ -9,21 +9,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from groq import Groq
 from pydub import AudioSegment
-from openai import OpenAI
 
 # ---------- Load ENV ----------
 load_dotenv()
 
 GROQ_KEY = os.getenv("GROQ_API_KEY")
-OPENAI_KEY = os.getenv("OPENAI_API_KEY")
-
 if not GROQ_KEY:
     raise Exception("GROQ_API_KEY missing")
-if not OPENAI_KEY:
-    raise Exception("OPENAI_API_KEY missing")
 
 groq_client = Groq(api_key=GROQ_KEY)
-openai_client = OpenAI(api_key=OPENAI_KEY)
 
 # ---------- App ----------
 app = FastAPI(title="Voice & Text Finance Analyzer")
@@ -102,9 +96,9 @@ async def analyze_voice(file: UploadFile = File(...)):
         buffer.seek(0)
         buffer.name = "voice.wav"
 
-        # Transcription using OpenAI Whisper
-        transcript = openai_client.audio.transcriptions.create(
-            model="whisper-1",
+        # Transcription using Groq Whisper
+        transcript = groq_client.audio.transcriptions.create(
+            model="whisper-large-v3-turbo",
             file=buffer,
             language="ar"
         )
