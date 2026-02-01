@@ -17,9 +17,10 @@ load_dotenv()
 
 GROQ_KEY = os.getenv("GROQ_API_KEY")
 if not GROQ_KEY:
-    raise Exception("GROQ_API_KEY missing")
-
-groq_client = Groq(api_key=GROQ_KEY)
+    print("Warning: GROQ_API_KEY missing - some features may not work")
+    groq_client = None
+else:
+    groq_client = Groq(api_key=GROQ_KEY)
 
 # ---------- Setup FFmpeg (Cross-platform) ----------
 if platform.system() == "Windows":
@@ -47,6 +48,15 @@ templates = Jinja2Templates(directory="templates")
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
+
+# ---------- Health Check ----------
+@app.get("/health")
+def health_check():
+    return {
+        "status": "healthy",
+        "groq_configured": groq_client is not None,
+        "message": "Finance Analyzer API is running"
+    }
 
 # ---------- Text Input ----------
 class TextInput(BaseModel):
@@ -79,6 +89,9 @@ Sentence:
 @app.post("/analyze")
 def analyze_text(input: TextInput):
     try:
+        if not groq_client:
+            raise HTTPException(status_code=503, detail="GROQ API not configured")
+            
         prompt = FINANCE_PROMPT.format(text=input.text)
 
         response = groq_client.chat.completions.create(
@@ -102,6 +115,9 @@ def analyze_text(input: TextInput):
 @app.post("/voice")
 async def analyze_voice(file: UploadFile = File(...)):
     try:
+        if not groq_client:
+            raise HTTPException(status_code=503, detail="GROQ API not configured")
+            
         if not file.filename:
             raise HTTPException(status_code=400, detail="Empty file")
 
