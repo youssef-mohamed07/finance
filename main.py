@@ -9,7 +9,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from groq import Groq
 from pydub import AudioSegment
-from pydub.utils import which  # ✅ مهم لتحديد ffmpeg/ffprobe
 
 # ---------- Load ENV ----------
 load_dotenv()
@@ -20,9 +19,9 @@ if not GROQ_KEY:
 
 groq_client = Groq(api_key=GROQ_KEY)
 
-# ---------- Setup FFmpeg for Railway ----------
-AudioSegment.converter = which("ffmpeg")
-AudioSegment.ffprobe = which("ffprobe")
+# ---------- Setup FFmpeg & FFprobe (Railway compatible) ----------
+AudioSegment.converter = "/usr/bin/ffmpeg"
+AudioSegment.ffprobe = "/usr/bin/ffprobe"
 
 # ---------- App ----------
 app = FastAPI(title="Voice & Text Finance Analyzer")
@@ -47,19 +46,27 @@ def home(request: Request):
 class TextInput(BaseModel):
     text: str
 
+# ---------- AI Prompt (Dynamic Category Creation) ----------
 FINANCE_PROMPT = """
-حلل الجملة التالية من حيث البيانات المالية فقط.
-ارجع JSON بالشكل التالي فقط:
+You are a financial analysis AI.
+
+Analyze the following sentence and return ONLY a JSON object.
+
+If the expense category does NOT match any common category,
+generate a NEW meaningful category name.
+
+Return JSON in this exact format:
 
 {
-  "amount": <number|null>,
-  "category": "<food|transport|shopping|bills|other>",
-  "item": "<what was bought or paid for | null>",
-  "place": "<optional>",
-  "type": "<expense|income>"
+  "amount": number | null,
+  "category": "string",
+  "item": "string | null",
+  "place": "string | null",
+  "type": "expense | income"
 }
 
-الجملة: "{text}"
+Sentence:
+"{text}"
 """
 
 # ---------- Text Analyze ----------
@@ -110,7 +117,7 @@ async def analyze_voice(file: UploadFile = File(...)):
 
         text = transcript.text
 
-        # Finance Analysis using Groq
+        # Finance Analysis
         prompt = FINANCE_PROMPT.format(text=text)
 
         response = groq_client.chat.completions.create(

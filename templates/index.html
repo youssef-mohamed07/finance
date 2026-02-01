@@ -44,7 +44,7 @@
         const statusText = document.getElementById("status");
         const resultBox = document.getElementById("result");
 
-        // ----------- بدء التسجيل -----------
+        // بدء التسجيل
         recordBtn.onclick = async () => {
             audioChunks = [];
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -61,7 +61,7 @@
             };
         };
 
-        // ----------- إيقاف التسجيل وإرسال الصوت -----------
+        // إيقاف التسجيل وإرسال الصوت
         stopBtn.onclick = async () => {
             mediaRecorder.stop();
 
@@ -70,12 +70,11 @@
             stopBtn.disabled = true;
 
             mediaRecorder.onstop = async () => {
-                const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
+                const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
                 const formData = new FormData();
-                formData.append("file", audioBlob, "voice.webm");
+                formData.append("file", audioBlob, "voice.wav");
 
                 try {
-                    // استخدم رابط نسبي بدل 127.0.0.1
                     const res = await fetch("/voice", {
                         method: "POST",
                         body: formData
@@ -85,8 +84,6 @@
 
                     const data = await res.json();
                     statusText.innerText = "✔️ تم التحليل";
-
-                    // عرض JSON بشكل مرتب داخل <pre>
                     resultBox.innerText = JSON.stringify(data, null, 2);
 
                 } catch (err) {
