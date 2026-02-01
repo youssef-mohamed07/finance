@@ -9,15 +9,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from pydub import AudioSegment
 from pydub.utils import mediainfo
-import openai
-import dateparser
+from groq import Groq
 
 # ---------- Load ENV ----------
 load_dotenv()
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-if not OPENAI_API_KEY:
-    raise Exception("OPENAI_API_KEY missing")
-openai.api_key = OPENAI_API_KEY
+GROQ_KEY = os.getenv("GROQ_API_KEY")
+if not GROQ_KEY:
+    raise Exception("GROQ_API_KEY missing")
+
+groq_client = Groq(api_key=GROQ_KEY)
 
 # ---------- Setup FFmpeg for Windows ----------
 AudioSegment.converter = r"C:\ffmpeg\bin\ffmpeg.exe"
@@ -46,67 +46,49 @@ def home(request: Request):
 class TextInput(BaseModel):
     text: str
 
-# ---------- Finance Analysis Prompt ----------
-PROMPT_TEMPLATE = """
-Extract financial transaction details from the following user text.
-Return a strict JSON object only, with keys:
-- amount
-- category (Food, Shopping, Bills, Transport, Health, Education, Entertainment, Other)
-- date (YYYY-MM-DD)
-- description
+# ---------- Finance Prompt ----------
+FINANCE_PROMPT = """
+You are a financial analysis AI.
 
-Now analyse this text:
+Analyze the following sentence and return ONLY a JSON object.
+
+If the expense category does NOT match any common category,
+generate a NEW meaningful category name.
+
+Return JSON in this exact format:
+
+{{
+  "amount": number | null,
+  "category": "string",
+  "item": "string | null",
+  "place": "string | null",
+  "type": "expense | income"
+}}
+
+Sentence:
 "{text}"
 """
 
-def analyze_text_with_openai(text: str) -> dict:
-    prompt = PROMPT_TEMPLATE.format(text=text.replace('"', '\\"'))
-    resp = openai.ChatCompletion.create(
-        model="gpt-4o-mini",
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0
-    )
-    content = resp.choices[0].message["content"].strip()
-    try:
-        data = json.loads(content)
-    except:
-        # fallback لو JSON مش مضبوط
-        start = content.find('{')
-        end = content.rfind('}')
-        data = json.loads(content[start:end+1])
-
-    # Normalize amount
-    try:
-        data["amount"] = float(data.get("amount"))
-    except:
-        data["amount"] = None
-
-    # Normalize date
-    parsed = dateparser.parse(data.get("date"))
-    if parsed:
-        data["date"] = parsed.strftime("%Y-%m-%d")
-    else:
-        data["date"] = dateparser.parse("today").strftime("%Y-%m-%d")
-
-    # Defaults
-    if not data.get("category"):
-        data["category"] = "Other"
-    if not data.get("description"):
-        data["description"] = text[:80]
-
-    return data
-
-# ---------- Text Analyze Endpoint ----------
+# ---------- Text Analyze ----------
 @app.post("/analyze")
 def analyze_text(input: TextInput):
     try:
-        result = analyze_text_with_openai(input.text)
-        return {"analysis": result}
+        prompt = FINANCE_PROMPT.format(text=input.text)
+        response = groq_client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0
+        )
+        output = response.choices[0].message.content
+        start = output.find("{")
+        end = output.rfind("}")
+        parsed = json.loads(output[start:end+1])
+        return {"analysis": parsed}
     except Exception as e:
         print("Text analyze error:", e)
         raise HTTPException(status_code=500, detail=str(e))
 
-# ---------- Voice Analyze Endpoint ----------
+# ---------- Voice Analyze ----------
 @app.post("/voice")
 async def analyze_voice(file: UploadFile = File(...)):
     try:
@@ -132,19 +114,29 @@ async def analyze_voice(file: UploadFile = File(...)):
         buffer.seek(0)
         buffer.name = "voice.wav"
 
-        # Transcription using OpenAI Whisper
-        transcript_resp = openai.Audio.transcriptions.create(
-            model="whisper-1",
-            file=buffer
+        # Transcription using Groq Whisper
+        transcript = groq_client.audio.transcriptions.create(
+            model="whisper-large-v3-turbo",
+            file=buffer,
+            language="ar"
         )
-        text = transcript_resp["text"]
+        text = transcript.text
 
-        # Analyze text
-        analysis = analyze_text_with_openai(text)
+        # Finance Analysis
+        prompt = FINANCE_PROMPT.format(text=text)
+        response = groq_client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0
+        )
+        output = response.choices[0].message.content
+        start = output.find("{")
+        end = output.rfind("}")
+        parsed = json.loads(output[start:end+1])
 
         return {
             "text": text,
-            "analysis": analysis
+            "analysis": parsed
         }
 
     except Exception as e:
