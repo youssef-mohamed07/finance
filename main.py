@@ -1,6 +1,7 @@
 import os
 import io
 import json
+import tempfile
 from dotenv import load_dotenv
 from fastapi import FastAPI, UploadFile, File, HTTPException, Request
 from fastapi.responses import HTMLResponse
@@ -8,7 +9,6 @@ from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from pydub import AudioSegment
-from pydub.utils import mediainfo
 from groq import Groq
 
 # ---------- Load ENV ----------
@@ -92,27 +92,26 @@ def analyze_text(input: TextInput):
 @app.post("/voice")
 async def analyze_voice(file: UploadFile = File(...)):
     try:
-        audio_bytes = await file.read()
-        if not audio_bytes:
-            raise HTTPException(status_code=400, detail="Empty audio file")
+        if not file.filename:
+            raise HTTPException(status_code=400, detail="Empty file")
 
-        # Detect format automatically
-        try:
-            info = mediainfo(io.BytesIO(audio_bytes))
-            format = info.get('format_name')
-            if not format:
-                format = os.path.splitext(file.filename)[1].lower()[1:]
-        except Exception:
-            format = os.path.splitext(file.filename)[1].lower()[1:]
+        # حفظ الملف مؤقتًا
+        suffix = os.path.splitext(file.filename)[1]
+        with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+            tmp.write(await file.read())
+            tmp_path = tmp.name
 
-        # Convert audio → WAV mono 16kHz
-        audio = AudioSegment.from_file(io.BytesIO(audio_bytes), format=format)
+        # تحويل الملف → WAV mono 16kHz
+        audio = AudioSegment.from_file(tmp_path)
         audio = audio.set_channels(1).set_frame_rate(16000)
 
-        buffer = io.BytesIO()
-        audio.export(buffer, format="wav")
-        buffer.seek(0)
-        buffer.name = "voice.wav"
+        wav_tmp = tmp_path + ".wav"
+        audio.export(wav_tmp, format="wav")
+
+        # فتح الملف WAV النهائي
+        with open(wav_tmp, "rb") as f:
+            buffer = io.BytesIO(f.read())
+            buffer.name = "voice.wav"
 
         # Transcription using Groq Whisper
         transcript = groq_client.audio.transcriptions.create(
@@ -133,6 +132,10 @@ async def analyze_voice(file: UploadFile = File(...)):
         start = output.find("{")
         end = output.rfind("}")
         parsed = json.loads(output[start:end+1])
+
+        # تنظيف الملفات المؤقتة
+        os.remove(tmp_path)
+        os.remove(wav_tmp)
 
         return {
             "text": text,
