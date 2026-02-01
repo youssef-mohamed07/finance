@@ -1,0 +1,814 @@
+2026-02-01 23:23:23,468 - __main__ - INFO - Starting server on port 8000
+2026-02-01 23:23:24,217 - main - INFO - Application startup
+2026-02-01 23:24:03,592 - main - INFO - Processing voice file: Standard recording 50.mp3
+2026-02-01 23:24:03,594 - main - INFO - Converting audio format...
+2026-02-01 23:24:03,620 - main - ERROR - Voice analysis error: [WinError 2] The system cannot find the file specified
+Traceback (most recent call last):
+  File "E:\Projects\ai\voice-finance-analyzer\main.py", line 256, in analyze_voice
+    logger.info("Converting audio format...")
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\YOUSSEF MOHAMED\AppData\Roaming\Python\Python314\site-packages\pydub\audio_segment.py", line 728, in from_file
+    info = mediainfo_json(orig_file, read_ahead_limit=read_ahead_limit)
+  File "C:\Users\YOUSSEF MOHAMED\AppData\Roaming\Python\Python314\site-packages\pydub\utils.py", line 274, in mediainfo_json
+    res = Popen(command, stdin=stdin_parameter, stdout=PIPE, stderr=PIPE)
+  File "C:\Python314\Lib\subprocess.py", line 1038, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        pass_fds, cwd, env,
+                        ^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                        gid, gids, uid, umask,
+                        ^^^^^^^^^^^^^^^^^^^^^^
+                        start_new_session, process_group)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\subprocess.py", line 1552, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                       ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+                             # no special security
+                             ^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                             cwd,
+                             ^^^^
+                             startupinfo)
+                             ^^^^^^^^^^^^
+FileNotFoundError: [WinError 2] The system cannot find the file specified
+2026-02-01 23:24:03,645 - main - WARNING - Failed to remove temp file C:\Users\YOUSSE~1\AppData\Local\Temp\tmp6x75btdj.mp3: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\YOUSSE~1\\AppData\\Local\\Temp\\tmp6x75btdj.mp3'
+2026-02-01 23:30:16,299 - __main__ - INFO - Starting server on port 8000
+2026-02-01 23:30:16,816 - main - INFO - Application startup
+2026-02-01 23:30:23,223 - main - INFO - Processing voice file: Standard recording 50.mp3
+2026-02-01 23:30:23,226 - main - INFO - Converting audio format...
+2026-02-01 23:30:24,028 - main - INFO - Transcribing audio...
+2026-02-01 23:30:25,740 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-02-01 23:30:25,741 - main - ERROR - Voice analysis error: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+Traceback (most recent call last):
+  File "E:\Projects\ai\voice-finance-analyzer\main.py", line 270, in analyze_voice
+    transcript = groq_client.audio.transcriptions.create(
+        model=GROQ_WHISPER_MODEL,
+    ...<2 lines>...
+        timeout=API_TIMEOUT
+    )
+  File "C:\Users\YOUSSEF MOHAMED\AppData\Roaming\Python\Python314\site-packages\groq\resources\audio\transcriptions.py", line 233, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/openai/v1/audio/transcriptions",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        cast_to=Transcription,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\YOUSSEF MOHAMED\AppData\Roaming\Python\Python314\site-packages\groq\_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\YOUSSEF MOHAMED\AppData\Roaming\Python\Python314\site-packages\groq\_base_client.py", line 1044, in request
+    raise self._make_status_error_from_response(err.response) from None
+groq.AuthenticationError: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-02-01 23:33:20,361 - main - INFO - Application shutdown
+2026-02-01 23:33:26,789 - __main__ - INFO - Groq client initialized
+2026-02-01 23:33:26,997 - __main__ - INFO - AssemblyAI client initialized
+2026-02-01 23:33:27,093 - __main__ - INFO - Starting server on port 8000
+2026-02-01 23:33:27,634 - main - INFO - Groq client initialized
+2026-02-01 23:33:27,635 - main - INFO - AssemblyAI client initialized
+2026-02-01 23:33:27,641 - main - INFO - Application startup
+2026-02-01 23:33:43,141 - main - INFO - Processing voice file: Standard recording 50.mp3
+2026-02-01 23:33:43,144 - main - INFO - Converting audio format...
+2026-02-01 23:33:43,377 - main - INFO - Transcribing audio using groq...
+2026-02-01 23:33:45,156 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/audio/transcriptions "HTTP/1.1 401 Unauthorized"
+2026-02-01 23:33:45,157 - main - ERROR - Voice analysis error: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+Traceback (most recent call last):
+  File "E:\Projects\ai\voice-finance-analyzer\main.py", line 302, in analyze_voice
+    transcript = groq_client.audio.transcriptions.create(
+        model=GROQ_WHISPER_MODEL,
+    ...<2 lines>...
+        timeout=API_TIMEOUT
+    )
+  File "C:\Users\YOUSSEF MOHAMED\AppData\Roaming\Python\Python314\site-packages\groq\resources\audio\transcriptions.py", line 233, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/openai/v1/audio/transcriptions",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        cast_to=Transcription,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\YOUSSEF MOHAMED\AppData\Roaming\Python\Python314\site-packages\groq\_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\YOUSSEF MOHAMED\AppData\Roaming\Python\Python314\site-packages\groq\_base_client.py", line 1044, in request
+    raise self._make_status_error_from_response(err.response) from None
+groq.AuthenticationError: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-02-01 23:35:14,844 - main - INFO - Application shutdown
+2026-02-01 23:35:17,545 - __main__ - INFO - Groq client initialized
+2026-02-01 23:35:17,705 - __main__ - INFO - AssemblyAI client initialized
+2026-02-01 23:35:17,810 - __main__ - INFO - Starting server on port 8000
+2026-02-01 23:35:18,351 - main - INFO - Groq client initialized
+2026-02-01 23:35:18,351 - main - INFO - AssemblyAI client initialized
+2026-02-01 23:35:18,359 - main - INFO - Application startup
+2026-02-01 23:35:26,271 - main - INFO - Processing voice file: Standard recording 50.mp3
+2026-02-01 23:35:26,274 - main - INFO - Converting audio format...
+2026-02-01 23:35:26,491 - main - INFO - Transcribing audio using assemblyai...
+2026-02-01 23:35:28,845 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/upload "HTTP/1.1 200 OK"
+2026-02-01 23:35:29,095 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/transcript "HTTP/1.1 200 OK"
+2026-02-01 23:35:29,324 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/f603f89c-3c3c-49ca-9ba9-16cb26af6ef1 "HTTP/1.1 200 OK"
+2026-02-01 23:35:33,235 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/f603f89c-3c3c-49ca-9ba9-16cb26af6ef1 "HTTP/1.1 200 OK"
+2026-02-01 23:35:33,236 - main - INFO - Transcription: Anashtari tala takilo hashishimbar film.
+2026-02-01 23:35:33,237 - main - INFO - Analyzing transcription...
+2026-02-01 23:35:34,003 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-02-01 23:35:34,004 - main - ERROR - Voice analysis error: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+Traceback (most recent call last):
+  File "E:\Projects\ai\voice-finance-analyzer\main.py", line 324, in analyze_voice
+    response = groq_client.chat.completions.create(
+        model=GROQ_CHAT_MODEL,
+    ...<2 lines>...
+        timeout=API_TIMEOUT
+    )
+  File "C:\Users\YOUSSEF MOHAMED\AppData\Roaming\Python\Python314\site-packages\groq\resources\chat\completions.py", line 461, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/openai/v1/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<45 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\YOUSSEF MOHAMED\AppData\Roaming\Python\Python314\site-packages\groq\_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\YOUSSEF MOHAMED\AppData\Roaming\Python\Python314\site-packages\groq\_base_client.py", line 1044, in request
+    raise self._make_status_error_from_response(err.response) from None
+groq.AuthenticationError: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-02-01 23:38:21,566 - main - INFO - Processing voice file: Standard recording 50.mp3
+2026-02-01 23:38:21,568 - main - INFO - Converting audio format...
+2026-02-01 23:38:21,778 - main - INFO - Transcribing audio using assemblyai...
+2026-02-01 23:38:24,545 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/upload "HTTP/1.1 200 OK"
+2026-02-01 23:38:24,794 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/transcript "HTTP/1.1 200 OK"
+2026-02-01 23:38:25,020 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/7fe18e72-1df0-47d4-b77d-c26b0e656e20 "HTTP/1.1 200 OK"
+2026-02-01 23:38:28,288 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/7fe18e72-1df0-47d4-b77d-c26b0e656e20 "HTTP/1.1 200 OK"
+2026-02-01 23:38:28,289 - main - INFO - Transcription: Anashtari tala takilo hashishimbar film.
+2026-02-01 23:38:28,289 - main - INFO - Analyzing transcription...
+2026-02-01 23:38:28,544 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-02-01 23:38:28,545 - main - ERROR - Voice analysis error: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+Traceback (most recent call last):
+  File "E:\Projects\ai\voice-finance-analyzer\main.py", line 324, in analyze_voice
+                    os.remove(wav_tmp)
+                           ^^^^^^^^^^^
+    ...<4 lines>...
+    # ---------- Run Server ----------
+    ^^^^^^^^^^^^^
+  File "C:\Users\YOUSSEF MOHAMED\AppData\Roaming\Python\Python314\site-packages\groq\resources\chat\completions.py", line 461, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/openai/v1/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<45 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\YOUSSEF MOHAMED\AppData\Roaming\Python\Python314\site-packages\groq\_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\YOUSSEF MOHAMED\AppData\Roaming\Python\Python314\site-packages\groq\_base_client.py", line 1044, in request
+    raise self._make_status_error_from_response(err.response) from None
+groq.AuthenticationError: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-02-01 23:38:33,365 - main - INFO - Application shutdown
+2026-02-01 23:38:36,576 - __main__ - INFO - AssemblyAI client initialized
+2026-02-01 23:38:36,695 - __main__ - INFO - Starting server on port 8000
+2026-02-01 23:38:36,740 - main - INFO - AssemblyAI client initialized
+2026-02-01 23:38:36,747 - main - INFO - Application startup
+2026-02-01 23:39:09,068 - main - INFO - Processing voice file: Standard recording 50.mp3
+2026-02-01 23:39:09,070 - main - INFO - Converting audio format...
+2026-02-01 23:39:09,288 - main - INFO - Transcribing audio using AssemblyAI...
+2026-02-01 23:39:11,902 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/upload "HTTP/1.1 200 OK"
+2026-02-01 23:39:12,173 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/transcript "HTTP/1.1 200 OK"
+2026-02-01 23:39:12,471 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/f984fa0a-8cd1-410d-bcdf-49d699153ac5 "HTTP/1.1 200 OK"
+2026-02-01 23:39:15,760 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/f984fa0a-8cd1-410d-bcdf-49d699153ac5 "HTTP/1.1 200 OK"
+2026-02-01 23:39:15,761 - main - INFO - Transcription: Anashtari tala takilo hashishimbar film.
+2026-02-01 23:39:15,761 - main - INFO - Analyzing transcription...
+2026-02-01 23:39:15,762 - main - ERROR - Voice analysis error: type object 'LemurModel' has no attribute 'basic'
+Traceback (most recent call last):
+  File "E:\Projects\ai\voice-finance-analyzer\main.py", line 287, in analyze_voice
+    final_model=aai.LemurModel.basic
+                ^^^^^^^^^^^^^^^^^^^^
+AttributeError: type object 'LemurModel' has no attribute 'basic'
+2026-02-01 23:39:56,926 - main - INFO - Application shutdown
+2026-02-01 23:39:59,019 - __main__ - INFO - AssemblyAI client initialized
+2026-02-01 23:39:59,127 - __main__ - INFO - Starting server on port 8000
+2026-02-01 23:39:59,178 - main - INFO - AssemblyAI client initialized
+2026-02-01 23:39:59,185 - main - INFO - Application startup
+2026-02-01 23:40:13,143 - main - INFO - Processing voice file: Standard recording 50.mp3
+2026-02-01 23:40:13,146 - main - INFO - Converting audio format...
+2026-02-01 23:40:13,358 - main - INFO - Transcribing audio using AssemblyAI...
+2026-02-01 23:40:16,066 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/upload "HTTP/1.1 200 OK"
+2026-02-01 23:40:16,333 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/transcript "HTTP/1.1 200 OK"
+2026-02-01 23:40:16,594 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/20251277-18c4-483f-bc3b-c7479e8b9e92 "HTTP/1.1 200 OK"
+2026-02-01 23:40:19,869 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/20251277-18c4-483f-bc3b-c7479e8b9e92 "HTTP/1.1 200 OK"
+2026-02-01 23:40:19,870 - main - INFO - Transcription: Anashtari tala takilo hashishimbar film.
+2026-02-01 23:40:19,870 - main - INFO - Analyzing transcription...
+2026-02-01 23:40:20,098 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/lemur/v3/generate/task "HTTP/1.1 401 Unauthorized"
+2026-02-01 23:40:20,099 - main - ERROR - Voice analysis error: failed to call Lemur task: Your account does not have access to LeMUR. Please upgrade or contact us at support@assemblyai.com for more information.
+Traceback (most recent call last):
+  File "E:\Projects\ai\voice-finance-analyzer\main.py", line 285, in analyze_voice
+    response = aai.Lemur().task(
+        prompt=prompt,
+        final_model=aai.LemurModel.default
+    )
+  File "C:\Users\YOUSSEF MOHAMED\AppData\Roaming\Python\Python314\site-packages\assemblyai\lemur.py", line 467, in task
+    return self._impl.task(
+           ~~~~~~~~~~~~~~~^
+        prompt=prompt,
+        ^^^^^^^^^^^^^^
+    ...<5 lines>...
+        input_text=input_text,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\YOUSSEF MOHAMED\AppData\Roaming\Python\Python314\site-packages\assemblyai\lemur.py", line 113, in task
+    response = api.lemur_task(
+        client=self._client.http_client,
+    ...<9 lines>...
+        http_timeout=timeout,
+    )
+  File "C:\Users\YOUSSEF MOHAMED\AppData\Roaming\Python\Python314\site-packages\assemblyai\api.py", line 366, in lemur_task
+    raise types.LemurError(
+    ...<2 lines>...
+    )
+assemblyai.types.LemurError: failed to call Lemur task: Your account does not have access to LeMUR. Please upgrade or contact us at support@assemblyai.com for more information.
+2026-02-01 23:41:20,663 - main - INFO - Application shutdown
+2026-02-01 23:41:22,650 - __main__ - INFO - AssemblyAI client initialized
+2026-02-01 23:41:22,764 - __main__ - INFO - Starting server on port 8000
+2026-02-01 23:41:22,821 - main - INFO - AssemblyAI client initialized
+2026-02-01 23:41:22,827 - main - INFO - Application startup
+2026-02-01 23:41:27,693 - main - INFO - Processing voice file: Standard recording 50.mp3
+2026-02-01 23:41:27,696 - main - INFO - Converting audio format...
+2026-02-01 23:41:27,909 - main - INFO - Transcribing audio using AssemblyAI...
+2026-02-01 23:41:30,636 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/upload "HTTP/1.1 200 OK"
+2026-02-01 23:41:30,920 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/transcript "HTTP/1.1 200 OK"
+2026-02-01 23:41:31,146 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/5c3f4ba5-ecc1-4cba-b9dd-9435d0272cc1 "HTTP/1.1 200 OK"
+2026-02-01 23:41:34,408 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/5c3f4ba5-ecc1-4cba-b9dd-9435d0272cc1 "HTTP/1.1 200 OK"
+2026-02-01 23:41:34,409 - main - INFO - Transcription: Anashtari tala takilo hashishimbar film.
+2026-02-01 23:41:34,409 - main - INFO - Analyzing transcription...
+2026-02-01 23:41:34,409 - main - INFO - Voice analysis successful: {'amount': None, 'category': 'entertainment', 'item': None, 'place': None, 'type': 'expense'}
+2026-02-01 23:42:47,199 - main - INFO - Application shutdown
+2026-02-01 23:42:49,490 - __main__ - INFO - AssemblyAI client initialized
+2026-02-01 23:42:49,599 - __main__ - INFO - Starting server on port 8000
+2026-02-01 23:42:49,660 - main - INFO - AssemblyAI client initialized
+2026-02-01 23:42:49,669 - main - INFO - Application startup
+2026-02-01 23:42:55,236 - main - INFO - Processing voice file: Standard recording 50.mp3
+2026-02-01 23:42:55,239 - main - INFO - Converting audio format...
+2026-02-01 23:42:55,460 - main - INFO - Transcribing audio using AssemblyAI...
+2026-02-01 23:42:58,312 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/upload "HTTP/1.1 200 OK"
+2026-02-01 23:42:58,584 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/transcript "HTTP/1.1 200 OK"
+2026-02-01 23:42:58,827 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/a2d94b86-8366-43cf-8a65-58d1148757b5 "HTTP/1.1 200 OK"
+2026-02-01 23:43:02,111 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/a2d94b86-8366-43cf-8a65-58d1148757b5 "HTTP/1.1 200 OK"
+2026-02-01 23:43:02,112 - main - INFO - Transcription: Anashtari tala takilo hashishimbar film.
+2026-02-01 23:43:02,112 - main - INFO - Analyzing transcription...
+2026-02-01 23:43:02,113 - main - INFO - Voice analysis successful: {'amount': None, 'category': 'entertainment', 'item': None, 'place': None, 'type': 'expense'}
+2026-02-01 23:44:24,812 - main - INFO - Application shutdown
+2026-02-01 23:44:26,693 - __main__ - INFO - AssemblyAI client initialized
+2026-02-01 23:44:26,787 - __main__ - INFO - Starting server on port 8000
+2026-02-01 23:44:26,848 - main - INFO - AssemblyAI client initialized
+2026-02-01 23:44:26,858 - main - INFO - Application startup
+2026-02-01 23:44:30,739 - main - INFO - Processing voice file: Standard recording 50.mp3
+2026-02-01 23:44:30,742 - main - INFO - Converting audio format...
+2026-02-01 23:44:30,953 - main - INFO - Transcribing audio using AssemblyAI...
+2026-02-01 23:44:33,610 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/upload "HTTP/1.1 200 OK"
+2026-02-01 23:44:34,099 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/transcript "HTTP/1.1 200 OK"
+2026-02-01 23:44:34,343 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/2f18d5f7-2d75-496b-8e8a-12971a257b79 "HTTP/1.1 200 OK"
+2026-02-01 23:44:37,626 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/2f18d5f7-2d75-496b-8e8a-12971a257b79 "HTTP/1.1 200 OK"
+2026-02-01 23:44:37,627 - main - INFO - Transcription: Anashtari tala takilo hashishimbar film.
+2026-02-01 23:44:37,628 - main - INFO - Analyzing transcription...
+2026-02-01 23:44:37,628 - main - INFO - Voice analysis successful: {'amount': None, 'category': 'ترفيه', 'item': None, 'place': None, 'type': 'مصروف'}
+2026-02-01 23:46:05,568 - main - INFO - Application shutdown
+2026-02-01 23:46:08,323 - __main__ - INFO - AssemblyAI client initialized
+2026-02-01 23:46:08,420 - __main__ - INFO - Starting server on port 8000
+2026-02-01 23:46:08,503 - main - INFO - AssemblyAI client initialized
+2026-02-01 23:46:08,510 - main - INFO - Application startup
+2026-02-01 23:46:25,087 - main - INFO - Processing voice file: s.mp3
+2026-02-01 23:46:25,089 - main - INFO - Converting audio format...
+2026-02-01 23:46:25,328 - main - INFO - Transcribing audio using AssemblyAI...
+2026-02-01 23:46:28,438 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/upload "HTTP/1.1 200 OK"
+2026-02-01 23:46:28,703 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/transcript "HTTP/1.1 200 OK"
+2026-02-01 23:46:29,034 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/62c7dcf5-38a8-41dd-ad94-104f258baa3f "HTTP/1.1 200 OK"
+2026-02-01 23:46:32,314 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/62c7dcf5-38a8-41dd-ad94-104f258baa3f "HTTP/1.1 200 OK"
+2026-02-01 23:46:32,315 - main - INFO - Transcription: انا رحت كارفور وجبت حاجات بخمسين جنيه وجبت قهوة بعشر جنيه وبعدين رحت جبت تسكرة قطر بخمسين جنيه وركبت القطر وكلت جوه للقطر حاجات بمية جنيه
+2026-02-01 23:46:32,316 - main - INFO - Analyzing transcription...
+2026-02-01 23:46:32,316 - main - INFO - Voice analysis successful: {'amount': 50.0, 'category': 'طعام', 'item': 'حاجات', 'place': 'كارفور', 'type': 'مصروف'}
+2026-02-01 23:48:38,429 - main - INFO - Application shutdown
+2026-02-01 23:48:40,285 - __main__ - INFO - AssemblyAI client initialized
+2026-02-01 23:48:40,382 - __main__ - INFO - Starting server on port 8000
+2026-02-01 23:48:40,441 - main - INFO - AssemblyAI client initialized
+2026-02-01 23:48:40,451 - main - INFO - Application startup
+2026-02-01 23:48:45,628 - main - INFO - Processing voice file: s.mp3
+2026-02-01 23:48:45,631 - main - INFO - Converting audio format...
+2026-02-01 23:48:45,857 - main - INFO - Transcribing audio using AssemblyAI...
+2026-02-01 23:48:50,116 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/upload "HTTP/1.1 200 OK"
+2026-02-01 23:48:50,452 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/transcript "HTTP/1.1 200 OK"
+2026-02-01 23:48:50,700 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/ccf2ae0c-c841-4edb-a2c4-e1534a1659db "HTTP/1.1 200 OK"
+2026-02-01 23:48:53,944 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/ccf2ae0c-c841-4edb-a2c4-e1534a1659db "HTTP/1.1 200 OK"
+2026-02-01 23:48:57,409 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/ccf2ae0c-c841-4edb-a2c4-e1534a1659db "HTTP/1.1 200 OK"
+2026-02-01 23:48:57,410 - main - INFO - Transcription: انا رحت كارفور وجبت حاجات بخمسين جنيه وجبت قهوة بعشر جنيه وبعدين رحت جبت تسكرة قطر بخمسين جنيه وركبت القطر وكلت جوه للقطر حاجات بمية جنيه
+2026-02-01 23:48:57,411 - main - INFO - Analyzing transcription...
+2026-02-01 23:48:57,418 - main - INFO - Voice analysis successful: {'amount': None, 'category': 'طعام وشراب', 'item': 'حاجات', 'place': 'كارفور', 'type': 'مصروف'}
+2026-02-01 23:50:16,194 - main - INFO - Application shutdown
+2026-02-01 23:50:18,188 - __main__ - INFO - AssemblyAI client initialized
+2026-02-01 23:50:18,290 - __main__ - INFO - Starting server on port 8000
+2026-02-01 23:50:18,354 - main - INFO - AssemblyAI client initialized
+2026-02-01 23:50:18,360 - main - INFO - Application startup
+2026-02-01 23:50:29,211 - main - INFO - Processing voice file: Standard recording 50.mp3
+2026-02-01 23:50:29,214 - main - INFO - Converting audio format...
+2026-02-01 23:50:29,543 - main - INFO - Transcribing audio using AssemblyAI...
+2026-02-01 23:50:32,137 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/upload "HTTP/1.1 200 OK"
+2026-02-01 23:50:32,587 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/transcript "HTTP/1.1 200 OK"
+2026-02-01 23:50:32,829 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/34807f4e-5d56-4dc3-9d80-5faaccf16ecb "HTTP/1.1 200 OK"
+2026-02-01 23:50:36,293 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/34807f4e-5d56-4dc3-9d80-5faaccf16ecb "HTTP/1.1 200 OK"
+2026-02-01 23:50:36,294 - main - INFO - Transcription: انا اشتريت 3 كيلو حشيش مبارح وبتاجر في المخدرات وجبت 100 جنيه بانجو من كرفور
+2026-02-01 23:50:36,295 - main - INFO - Analyzing transcription...
+2026-02-01 23:50:36,296 - main - INFO - Voice analysis successful: {'amount': 100.0, 'category': 'أخرى', 'item': 'المخدرات', 'place': None, 'type': 'مصروف'}
+2026-02-01 23:51:51,440 - main - INFO - Processing voice file: s.mp3
+2026-02-01 23:51:51,442 - main - INFO - Converting audio format...
+2026-02-01 23:51:51,671 - main - INFO - Transcribing audio using AssemblyAI...
+2026-02-01 23:51:54,746 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/upload "HTTP/1.1 200 OK"
+2026-02-01 23:51:55,013 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/transcript "HTTP/1.1 200 OK"
+2026-02-01 23:51:55,249 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/d5e02e57-921e-447b-97c1-864da73acfca "HTTP/1.1 200 OK"
+2026-02-01 23:51:58,485 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/d5e02e57-921e-447b-97c1-864da73acfca "HTTP/1.1 200 OK"
+2026-02-01 23:52:01,769 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/d5e02e57-921e-447b-97c1-864da73acfca "HTTP/1.1 200 OK"
+2026-02-01 23:52:01,770 - main - INFO - Transcription: انا رحت كارفور وجبت حاجات بخمسين جنيه وجبت قهوة بعشر جنيه وبعدين رحت جبت تسكرة قطر بخمسين جنيه وركبت القطر وكلت جوه للقطر حاجات بمية جنيه
+2026-02-01 23:52:01,770 - main - INFO - Analyzing transcription...
+2026-02-01 23:52:01,771 - main - INFO - Voice analysis successful: {'amount': None, 'category': 'طعام وشراب', 'item': 'حاجات', 'place': 'كارفور', 'type': 'مصروف'}
+2026-02-01 23:54:02,855 - main - INFO - Processing voice file: s.mp3
+2026-02-01 23:54:02,857 - main - INFO - Converting audio format...
+2026-02-01 23:54:03,157 - main - INFO - Transcribing audio using AssemblyAI...
+2026-02-01 23:54:07,529 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/upload "HTTP/1.1 200 OK"
+2026-02-01 23:54:07,850 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/transcript "HTTP/1.1 200 OK"
+2026-02-01 23:54:08,096 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/be28e661-2b2a-4e2a-8a19-30047db36eaf "HTTP/1.1 200 OK"
+2026-02-01 23:54:11,376 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/be28e661-2b2a-4e2a-8a19-30047db36eaf "HTTP/1.1 200 OK"
+2026-02-01 23:54:11,378 - main - INFO - Transcription: انا رحت كارفور وجبت حاجات بخمسين جنيه وجبت قهوة بعشر جنيه وبعدين رحت جبت تسكرة قطر بخمسين جنيه وركبت القطر وكلت جوه للقطر حاجات بمية جنيه
+2026-02-01 23:54:11,379 - main - INFO - Analyzing transcription...
+2026-02-01 23:54:11,379 - main - INFO - Voice analysis successful: {'amount': None, 'category': 'طعام وشراب', 'item': 'حاجات', 'place': 'كارفور', 'type': 'مصروف'}
+2026-02-01 23:55:37,372 - main - INFO - Processing voice file: s.mp3
+2026-02-01 23:55:37,374 - main - INFO - Converting audio format...
+2026-02-01 23:55:37,628 - main - INFO - Transcribing audio using AssemblyAI...
+2026-02-01 23:55:40,052 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/upload "HTTP/1.1 200 OK"
+2026-02-01 23:55:40,512 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/transcript "HTTP/1.1 200 OK"
+2026-02-01 23:55:40,799 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/924089bb-35fe-47dc-85b2-bf7579c2b002 "HTTP/1.1 200 OK"
+2026-02-01 23:55:44,080 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/924089bb-35fe-47dc-85b2-bf7579c2b002 "HTTP/1.1 200 OK"
+2026-02-01 23:55:44,081 - main - INFO - Transcription: انا رحت كارفور وجبت حاجات بخمسين جنيه وجبت قهوة بعشر جنيه وبعدين رحت جبت تسكرة قطر بخمسين جنيه وركبت القطر وكلت جوه للقطر حاجات بمية جنيه
+2026-02-01 23:55:44,082 - main - INFO - Analyzing transcription...
+2026-02-01 23:55:44,082 - main - INFO - Voice analysis successful: {'amount': None, 'category': 'طعام وشراب', 'item': 'حاجات', 'place': 'كارفور', 'type': 'مصروف'}
+2026-02-01 23:55:55,570 - main - INFO - Application shutdown
+2026-02-01 23:55:57,565 - __main__ - INFO - AssemblyAI client initialized
+2026-02-01 23:55:57,674 - __main__ - INFO - Starting server on port 8000
+2026-02-01 23:55:57,744 - main - INFO - AssemblyAI client initialized
+2026-02-01 23:55:57,756 - main - INFO - Application startup
+2026-02-01 23:56:07,447 - main - INFO - Processing voice file: s.mp3
+2026-02-01 23:56:07,449 - main - INFO - Converting audio format...
+2026-02-01 23:56:07,687 - main - INFO - Transcribing audio using AssemblyAI...
+2026-02-01 23:56:12,682 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/upload "HTTP/1.1 200 OK"
+2026-02-01 23:56:13,449 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/transcript "HTTP/1.1 200 OK"
+2026-02-01 23:56:13,733 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/28faa4ac-30e0-4c94-b3db-243e0c3355e6 "HTTP/1.1 200 OK"
+2026-02-01 23:56:17,159 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/28faa4ac-30e0-4c94-b3db-243e0c3355e6 "HTTP/1.1 200 OK"
+2026-02-01 23:56:17,160 - main - INFO - Transcription: انا رحت كارفور وجبت حاجات بخمسين جنيه وجبت قهوة بعشر جنيه وبعدين رحت جبت تسكرة قطر بخمسين جنيه وركبت القطر وكلت جوه للقطر حاجات بمية جنيه
+2026-02-01 23:56:17,161 - main - INFO - Analyzing transcription...
+2026-02-01 23:56:17,163 - main - WARNING - Could not extract amount from text: انا رحت كارفور وجبت حاجات بخمسين جنيه وجبت قهوة بعشر جنيه وبعدين رحت جبت تسكرة قطر بخمسين جنيه وركبت
+2026-02-01 23:56:17,164 - main - INFO - Voice analysis successful: {'amount': None, 'category': 'طعام وشراب', 'item': 'حاجات', 'place': 'كارفور', 'type': 'مصروف'}
+2026-02-01 23:57:33,454 - main - INFO - Application shutdown
+2026-02-01 23:57:35,422 - __main__ - INFO - AssemblyAI client initialized
+2026-02-01 23:57:35,557 - __main__ - INFO - Starting server on port 8000
+2026-02-01 23:57:35,617 - main - INFO - AssemblyAI client initialized
+2026-02-01 23:57:35,629 - main - INFO - Application startup
+2026-02-01 23:57:40,496 - main - INFO - Processing voice file: s.mp3
+2026-02-01 23:57:40,498 - main - INFO - Converting audio format...
+2026-02-01 23:57:40,734 - main - INFO - Transcribing audio using AssemblyAI...
+2026-02-01 23:57:44,668 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/upload "HTTP/1.1 200 OK"
+2026-02-01 23:57:44,924 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/transcript "HTTP/1.1 200 OK"
+2026-02-01 23:57:45,151 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/448de15e-6f19-4cb2-bec5-5162dfa6e6f8 "HTTP/1.1 200 OK"
+2026-02-01 23:57:48,527 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/448de15e-6f19-4cb2-bec5-5162dfa6e6f8 "HTTP/1.1 200 OK"
+2026-02-01 23:57:48,528 - main - INFO - Transcription: انا رحت كارفور وجبت حاجات بخمسين جنيه وجبت قهوة بعشر جنيه وبعدين رحت جبت تسكرة قطر بخمسين جنيه وركبت القطر وكلت جوه للقطر حاجات بمية جنيه
+2026-02-01 23:57:48,529 - main - INFO - Analyzing transcription...
+2026-02-01 23:57:48,529 - main - INFO - Extracted amount from Arabic words: 210 from text: انا رحت كارفور وجبت حاجات بخمسين جنيه وجبت قهوة بع
+2026-02-01 23:57:48,530 - main - INFO - Voice analysis successful: {'amount': 210.0, 'category': 'طعام وشراب', 'item': 'حاجات', 'place': 'كارفور', 'type': 'مصروف'}
+2026-02-02 00:01:30,394 - main - INFO - Application shutdown
+2026-02-02 00:01:32,586 - __main__ - INFO - AssemblyAI client initialized
+2026-02-02 00:01:32,694 - __main__ - INFO - Starting server on port 8000
+2026-02-02 00:01:32,768 - main - INFO - AssemblyAI client initialized
+2026-02-02 00:01:32,777 - main - INFO - Application startup
+2026-02-02 00:01:57,746 - main - INFO - Processing voice file: s.mp3
+2026-02-02 00:01:57,747 - main - INFO - Converting audio format...
+2026-02-02 00:01:58,008 - main - INFO - Transcribing audio using AssemblyAI...
+2026-02-02 00:02:02,174 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/upload "HTTP/1.1 200 OK"
+2026-02-02 00:02:02,477 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/transcript "HTTP/1.1 200 OK"
+2026-02-02 00:02:02,746 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/c9e59734-a41b-476b-b268-c883600bfe82 "HTTP/1.1 200 OK"
+2026-02-02 00:02:06,266 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/c9e59734-a41b-476b-b268-c883600bfe82 "HTTP/1.1 200 OK"
+2026-02-02 00:02:06,268 - main - INFO - Transcription: انا رحت كارفور وجبت حاجات بخمسين جنيه وجبت قهوة بعشر جنيه وبعدين رحت جبت تسكرة قطر بخمسين جنيه وركبت القطر وكلت جوه للقطر حاجات بمية جنيه
+2026-02-02 00:02:06,269 - main - INFO - Analyzing transcription...
+2026-02-02 00:02:06,270 - main - INFO - Extracted 3 amounts: [50, 10, 100]
+2026-02-02 00:02:06,271 - main - INFO - Split into 4 transaction segments
+2026-02-02 00:02:06,271 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:02:06,272 - main - ERROR - Voice analysis error: name 'extract_amount' is not defined
+Traceback (most recent call last):
+  File "E:\Projects\ai\voice-finance-analyzer\main.py", line 773, in analyze_voice
+    parsed = analyze_text_detailed(text)
+  File "E:\Projects\ai\voice-finance-analyzer\main.py", line 450, in analyze_text_detailed
+    transaction = analyze_single_transaction(segment, amount)
+  File "E:\Projects\ai\voice-finance-analyzer\main.py", line 522, in analyze_single_transaction
+    amount = extract_amount(text)
+             ^^^^^^^^^^^^^^
+NameError: name 'extract_amount' is not defined. Did you mean: 'extract_all_amounts'?
+2026-02-02 00:03:18,267 - main - INFO - Application shutdown
+2026-02-02 00:03:19,935 - __main__ - INFO - AssemblyAI client initialized
+2026-02-02 00:03:20,045 - __main__ - INFO - Starting server on port 8000
+2026-02-02 00:03:20,121 - main - INFO - AssemblyAI client initialized
+2026-02-02 00:03:20,133 - main - INFO - Application startup
+2026-02-02 00:03:31,913 - main - INFO - Processing voice file: s.mp3
+2026-02-02 00:03:31,915 - main - INFO - Converting audio format...
+2026-02-02 00:03:32,154 - main - INFO - Transcribing audio using AssemblyAI...
+2026-02-02 00:03:35,363 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/upload "HTTP/1.1 200 OK"
+2026-02-02 00:03:35,640 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/transcript "HTTP/1.1 200 OK"
+2026-02-02 00:03:36,132 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/b24607a0-bf7c-4152-8b7b-8b19c8e36f5d "HTTP/1.1 200 OK"
+2026-02-02 00:03:39,493 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/b24607a0-bf7c-4152-8b7b-8b19c8e36f5d "HTTP/1.1 200 OK"
+2026-02-02 00:03:39,494 - main - INFO - Transcription: انا رحت كارفور وجبت حاجات بخمسين جنيه وجبت قهوة بعشر جنيه وبعدين رحت جبت تسكرة قطر بخمسين جنيه وركبت القطر وكلت جوه للقطر حاجات بمية جنيه
+2026-02-02 00:03:39,494 - main - INFO - Analyzing transcription...
+2026-02-02 00:03:39,496 - main - INFO - Extracted 3 amounts: [50, 10, 100]
+2026-02-02 00:03:39,497 - main - INFO - Split into 4 transaction segments
+2026-02-02 00:03:39,497 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:03:39,498 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:03:39,498 - main - INFO - Extracted 1 amounts: [10]
+2026-02-02 00:03:39,499 - main - INFO - Extracted 2 amounts: [50, 100]
+2026-02-02 00:03:39,499 - main - INFO - Voice analysis successful: {'total_amount': 160, 'transactions': [{'amount': 50, 'category': 'طعام وشراب', 'item': None, 'place': 'كارفور', 'type': 'مصروف'}, {'amount': 50, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}, {'amount': 10, 'category': 'طعام وشراب', 'item': None, 'place': None, 'type': 'مصروف'}, {'amount': 50, 'category': 'طعام وشراب', 'item': 'تسكرة', 'place': None, 'type': 'مصروف'}], 'summary': 'تم تسجيل 4 معاملة بإجمالي 160 جنيه'}
+2026-02-02 00:05:23,263 - main - INFO - Application shutdown
+2026-02-02 00:05:25,090 - __main__ - INFO - AssemblyAI client initialized
+2026-02-02 00:05:25,241 - __main__ - INFO - Starting server on port 8000
+2026-02-02 00:05:25,315 - main - INFO - AssemblyAI client initialized
+2026-02-02 00:05:25,326 - main - INFO - Application startup
+2026-02-02 00:05:31,140 - main - INFO - Processing voice file: s.mp3
+2026-02-02 00:05:31,143 - main - INFO - Converting audio format...
+2026-02-02 00:05:31,370 - main - INFO - Transcribing audio using AssemblyAI...
+2026-02-02 00:05:35,596 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/upload "HTTP/1.1 200 OK"
+2026-02-02 00:05:36,005 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/transcript "HTTP/1.1 200 OK"
+2026-02-02 00:05:36,242 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/aa7381e0-060d-4478-952e-45bb5c8939ff "HTTP/1.1 200 OK"
+2026-02-02 00:05:39,515 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/aa7381e0-060d-4478-952e-45bb5c8939ff "HTTP/1.1 200 OK"
+2026-02-02 00:05:39,516 - main - INFO - Transcription: انا رحت كارفور وجبت حاجات بخمسين جنيه وجبت قهوة بعشر جنيه وبعدين رحت جبت تسكرة قطر بخمسين جنيه وركبت القطر وكلت جوه للقطر حاجات بمية جنيه
+2026-02-02 00:05:39,516 - main - INFO - Analyzing transcription...
+2026-02-02 00:05:39,518 - main - INFO - Extracted 3 amounts: [50, 10, 100]
+2026-02-02 00:05:39,519 - main - INFO - Found amounts: [50, 10, 100]
+2026-02-02 00:05:39,521 - main - INFO - Split into 8 transaction segments: ['انا رحت كارفور', 'حاجات بخمسين جنيه', 'قهوة بعشر جنيه', 'رحت جبت تسكرة قطر بخمسين جنيه', 'وركبت', 'القطر', 'وكلت', 'جوه للقطر حاجات بمية جنيه']
+2026-02-02 00:05:39,522 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:05:39,523 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:05:39,525 - main - INFO - Transaction: {'amount': None, 'category': 'طعام وشراب', 'item': None, 'place': 'كارفور', 'type': 'مصروف'}
+2026-02-02 00:05:39,526 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:05:39,526 - main - INFO - Transaction: {'amount': 50, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}
+2026-02-02 00:05:39,527 - main - INFO - Extracted 1 amounts: [10]
+2026-02-02 00:05:39,528 - main - INFO - Transaction: {'amount': 10, 'category': 'طعام وشراب', 'item': None, 'place': None, 'type': 'مصروف'}
+2026-02-02 00:05:39,529 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:05:39,529 - main - INFO - Transaction: {'amount': 50, 'category': 'طعام وشراب', 'item': 'تسكرة', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:05:39,530 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:05:39,530 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:05:39,531 - main - INFO - Transaction: {'amount': None, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}
+2026-02-02 00:05:39,531 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:05:39,532 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:05:39,532 - main - INFO - Transaction: {'amount': None, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}
+2026-02-02 00:05:39,533 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:05:39,533 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:05:39,534 - main - INFO - Transaction: {'amount': None, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}
+2026-02-02 00:05:39,534 - main - INFO - Extracted 1 amounts: [100]
+2026-02-02 00:05:39,535 - main - INFO - Transaction: {'amount': 100, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}
+2026-02-02 00:05:39,535 - main - INFO - Voice analysis successful: {'total_amount': 160, 'transactions': [{'amount': None, 'category': 'طعام وشراب', 'item': None, 'place': 'كارفور', 'type': 'مصروف'}, {'amount': 50, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}, {'amount': 10, 'category': 'طعام وشراب', 'item': None, 'place': None, 'type': 'مصروف'}, {'amount': 50, 'category': 'طعام وشراب', 'item': 'تسكرة', 'place': None, 'type': 'مصروف'}, {'amount': None, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}, {'amount': None, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}, {'amount': None, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}, {'amount': 100, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}], 'summary': 'تم تسجيل 8 معاملة بإجمالي 160 جنيه'}
+2026-02-02 00:07:13,650 - main - INFO - Application shutdown
+2026-02-02 00:07:17,918 - __main__ - INFO - AssemblyAI client initialized
+2026-02-02 00:07:18,034 - __main__ - INFO - Starting server on port 8000
+2026-02-02 00:07:18,115 - main - INFO - AssemblyAI client initialized
+2026-02-02 00:07:18,125 - main - INFO - Application startup
+2026-02-02 00:07:35,080 - main - INFO - Processing voice file: s.mp3
+2026-02-02 00:07:35,084 - main - INFO - Converting audio format...
+2026-02-02 00:07:35,334 - main - INFO - Transcribing audio using AssemblyAI...
+2026-02-02 00:07:39,699 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/upload "HTTP/1.1 200 OK"
+2026-02-02 00:07:39,990 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/transcript "HTTP/1.1 200 OK"
+2026-02-02 00:07:40,239 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/c2375a59-4bea-438a-ae64-4c161bad7da3 "HTTP/1.1 200 OK"
+2026-02-02 00:07:43,559 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/c2375a59-4bea-438a-ae64-4c161bad7da3 "HTTP/1.1 200 OK"
+2026-02-02 00:07:43,562 - main - INFO - Transcription: انا رحت كارفور وجبت حاجات بخمسين جنيه وجبت قهوة بعشر جنيه وبعدين رحت جبت تسكرة قطر بخمسين جنيه وركبت القطر وكلت جوه للقطر حاجات بمية جنيه
+2026-02-02 00:07:43,563 - main - INFO - Analyzing transcription...
+2026-02-02 00:07:43,564 - main - INFO - Extracted 4 amounts: [50, 10, 50, 100]
+2026-02-02 00:07:43,565 - main - INFO - Found amounts: [50, 10, 50, 100]
+2026-02-02 00:07:43,565 - main - INFO - Split into 6 segments: ['انا رحت كارفور', 'جبت حاجات بخمسين جنيه', 'جبت قهوة بعشر جنيه', 'رحت جبت تسكرة قطر بخمسين جنيه', 'ركبت القطر', 'كلت جوه للقطر حاجات بمية جنيه']
+2026-02-02 00:07:43,566 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:07:43,566 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:07:43,567 - main - INFO - Transaction: {'amount': None, 'category': 'طعام وشراب', 'item': None, 'place': 'كارفور', 'type': 'مصروف'}
+2026-02-02 00:07:43,568 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:07:43,568 - main - INFO - Transaction: {'amount': 50, 'category': 'أخرى', 'item': 'حاجات', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:07:43,568 - main - INFO - Extracted 1 amounts: [10]
+2026-02-02 00:07:43,569 - main - INFO - Transaction: {'amount': 10, 'category': 'طعام وشراب', 'item': 'قهوة', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:07:43,569 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:07:43,570 - main - INFO - Transaction: {'amount': 50, 'category': 'طعام وشراب', 'item': 'تسكرة', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:07:43,570 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:07:43,571 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:07:43,571 - main - INFO - Transaction: {'amount': None, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}
+2026-02-02 00:07:43,572 - main - INFO - Extracted 1 amounts: [100]
+2026-02-02 00:07:43,572 - main - INFO - Transaction: {'amount': 100, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}
+2026-02-02 00:07:43,573 - main - INFO - Voice analysis successful: {'total_amount': 210, 'transactions': [{'amount': None, 'category': 'طعام وشراب', 'item': None, 'place': 'كارفور', 'type': 'مصروف'}, {'amount': 50, 'category': 'أخرى', 'item': 'حاجات', 'place': None, 'type': 'مصروف'}, {'amount': 10, 'category': 'طعام وشراب', 'item': 'قهوة', 'place': None, 'type': 'مصروف'}, {'amount': 50, 'category': 'طعام وشراب', 'item': 'تسكرة', 'place': None, 'type': 'مصروف'}, {'amount': None, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}, {'amount': 100, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}], 'summary': 'تم تسجيل 6 معاملة بإجمالي 210 جنيه'}
+2026-02-02 00:12:26,052 - main - INFO - AssemblyAI client initialized
+2026-02-02 00:12:26,101 - main - INFO - Extracted 4 amounts: [50, 10, 50, 100]
+2026-02-02 00:12:26,102 - main - INFO - Found amounts: [50, 10, 50, 100]
+2026-02-02 00:12:26,103 - main - INFO - Split into 6 segments: ['انا رحت كارفور', 'جبت حاجات بخمسين جنيه', 'جبت قهوة بعشر جنيه', 'رحت جبت تسكرة قطر بخمسين جنيه', 'ركبت القطر', 'كلت جوه للقطر حاجات بمية جنيه']
+2026-02-02 00:12:26,104 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:12:26,106 - main - INFO - Transaction 1: {'amount': 50, 'category': 'طعام وشراب', 'item': None, 'place': 'كارفور', 'type': 'مصروف'}
+2026-02-02 00:12:26,107 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:12:26,107 - main - INFO - Transaction 2: {'amount': 50, 'category': 'أخرى', 'item': 'حاجات', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:12:26,108 - main - INFO - Extracted 1 amounts: [10]
+2026-02-02 00:12:26,108 - main - INFO - Transaction 3: {'amount': 10, 'category': 'طعام وشراب', 'item': 'قهوة', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:12:26,109 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:12:26,109 - main - INFO - Transaction 4: {'amount': 50, 'category': 'طعام وشراب', 'item': 'تسكرة', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:12:26,110 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:12:26,110 - main - INFO - Transaction 5: {'amount': 100, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}
+2026-02-02 00:12:26,110 - main - INFO - Extracted 1 amounts: [100]
+2026-02-02 00:12:26,111 - main - INFO - Transaction 6: {'amount': 100, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}
+2026-02-02 00:13:58,577 - main - INFO - AssemblyAI client initialized
+2026-02-02 00:13:58,628 - main - INFO - Extracted 4 amounts: [50, 10, 50, 100]
+2026-02-02 00:13:58,628 - main - INFO - Found amounts: [50, 10, 50, 100]
+2026-02-02 00:13:58,629 - main - INFO - Split into 6 segments: ['انا رحت كارفور', 'جبت حاجات بخمسين جنيه', 'جبت قهوة بعشر جنيه', 'رحت جبت تسكرة قطر بخمسين جنيه', 'ركبت القطر', 'كلت جوه للقطر حاجات بمية جنيه']
+2026-02-02 00:13:58,630 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:13:58,631 - main - INFO - Transaction 1: {'amount': 50, 'category': 'طعام وشراب', 'item': None, 'place': 'كارفور', 'type': 'مصروف'}
+2026-02-02 00:13:58,631 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:13:58,632 - main - INFO - Transaction 2: {'amount': 50, 'category': 'أخرى', 'item': 'حاجات', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:13:58,632 - main - INFO - Extracted 1 amounts: [10]
+2026-02-02 00:13:58,633 - main - INFO - Transaction 3: {'amount': 10, 'category': 'طعام وشراب', 'item': 'قهوة', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:13:58,633 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:13:58,634 - main - INFO - Transaction 4: {'amount': 50, 'category': 'طعام وشراب', 'item': 'تسكرة', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:13:58,634 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:13:58,634 - main - INFO - Transaction 5: {'amount': 100, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}
+2026-02-02 00:13:58,635 - main - INFO - Extracted 1 amounts: [100]
+2026-02-02 00:13:58,635 - main - INFO - Transaction 6: {'amount': 100, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}
+2026-02-02 00:14:44,683 - main - INFO - AssemblyAI client initialized
+2026-02-02 00:14:44,731 - main - INFO - Extracted 4 amounts: [50, 10, 50, 100]
+2026-02-02 00:14:44,731 - main - INFO - Found amounts: [50, 10, 50, 100]
+2026-02-02 00:14:44,732 - main - INFO - Split into 6 segments: ['انا رحت كارفور', 'جبت حاجات بخمسين جنيه', 'جبت قهوة بعشر جنيه', 'رحت جبت تسكرة قطر بخمسين جنيه', 'ركبت القطر', 'كلت جوه للقطر حاجات بمية جنيه']
+2026-02-02 00:14:44,732 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:14:44,733 - main - INFO - Transaction 1: {'amount': 50, 'category': 'طعام وشراب', 'item': None, 'place': 'كارفور', 'type': 'مصروف'}
+2026-02-02 00:14:44,734 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:14:44,734 - main - INFO - Transaction 2: {'amount': 50, 'category': 'أخرى', 'item': 'حاجات', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:14:44,735 - main - INFO - Extracted 1 amounts: [10]
+2026-02-02 00:14:44,735 - main - INFO - Transaction 3: {'amount': 10, 'category': 'طعام وشراب', 'item': 'قهوة', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:14:44,735 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:14:44,736 - main - INFO - Transaction 4: {'amount': 50, 'category': 'طعام وشراب', 'item': 'تسكرة', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:14:44,736 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:14:44,737 - main - INFO - Transaction 5: {'amount': 100, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}
+2026-02-02 00:14:44,737 - main - INFO - Extracted 1 amounts: [100]
+2026-02-02 00:14:44,737 - main - INFO - Transaction 6: {'amount': 100, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}
+2026-02-02 00:15:18,295 - main - INFO - AssemblyAI client initialized
+2026-02-02 00:15:18,343 - main - INFO - Extracted 4 amounts: [50, 10, 50, 100]
+2026-02-02 00:15:18,344 - main - INFO - Found amounts: [50, 10, 50, 100]
+2026-02-02 00:15:18,344 - main - INFO - Split into 6 segments: ['انا رحت كارفور', 'جبت حاجات بخمسين جنيه', 'جبت قهوة بعشر جنيه', 'رحت جبت تسكرة قطر بخمسين جنيه', 'ركبت القطر', 'كلت جوه للقطر حاجات بمية جنيه']
+2026-02-02 00:15:18,345 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:15:18,347 - main - INFO - Transaction 1: {'amount': 50, 'category': 'طعام وشراب', 'item': None, 'place': 'كارفور', 'type': 'مصروف'}
+2026-02-02 00:15:18,347 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:15:18,347 - main - INFO - Transaction 2: {'amount': 50, 'category': 'أخرى', 'item': 'حاجات', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:15:18,348 - main - INFO - Extracted 1 amounts: [10]
+2026-02-02 00:15:18,348 - main - INFO - Transaction 3: {'amount': 10, 'category': 'طعام وشراب', 'item': 'قهوة', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:15:18,349 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:15:18,349 - main - INFO - Transaction 4: {'amount': 50, 'category': 'طعام وشراب', 'item': 'تسكرة', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:15:18,349 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:15:18,350 - main - INFO - Transaction 5: {'amount': 100, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}
+2026-02-02 00:15:18,350 - main - INFO - Extracted 1 amounts: [100]
+2026-02-02 00:15:18,350 - main - INFO - Transaction 6: {'amount': 100, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}
+2026-02-02 00:15:58,981 - main - INFO - AssemblyAI client initialized
+2026-02-02 00:15:59,028 - main - INFO - Extracted 4 amounts: [50, 10, 50, 100]
+2026-02-02 00:15:59,029 - main - INFO - Found amounts: [50, 10, 50, 100]
+2026-02-02 00:15:59,030 - main - INFO - Split into 6 segments: ['انا رحت كارفور', 'جبت حاجات بخمسين جنيه', 'جبت قهوة بعشر جنيه', 'رحت جبت تسكرة قطر بخمسين جنيه', 'ركبت القطر', 'كلت جوه للقطر حاجات بمية جنيه']
+2026-02-02 00:15:59,030 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:15:59,033 - main - INFO - Transaction 1: {'amount': 50, 'category': 'طعام وشراب', 'item': None, 'place': 'كارفور', 'type': 'مصروف'}
+2026-02-02 00:15:59,033 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:15:59,033 - main - INFO - Transaction 2: {'amount': 50, 'category': 'أخرى', 'item': 'حاجات', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:15:59,034 - main - INFO - Extracted 1 amounts: [10]
+2026-02-02 00:15:59,034 - main - INFO - Transaction 3: {'amount': 10, 'category': 'طعام وشراب', 'item': 'قهوة', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:15:59,035 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:15:59,035 - main - INFO - Transaction 4: {'amount': 50, 'category': 'طعام وشراب', 'item': 'تسكرة', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:15:59,036 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:15:59,036 - main - INFO - Transaction 5: {'amount': 100, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}
+2026-02-02 00:15:59,036 - main - INFO - Extracted 1 amounts: [100]
+2026-02-02 00:15:59,037 - main - INFO - Transaction 6: {'amount': 100, 'category': 'أخرى', 'item': None, 'place': None, 'type': 'مصروف'}
+2026-02-02 00:16:22,787 - main - INFO - AssemblyAI client initialized
+2026-02-02 00:16:22,835 - main - INFO - Split into 6 segments: ['انا رحت كارفور', 'جبت حاجات بخمسين جنيه', 'جبت قهوة بعشر جنيه', 'رحت جبت تسكرة قطر بخمسين جنيه', 'ركبت القطر', 'كلت جوه للقطر حاجات بمية جنيه']
+2026-02-02 00:16:35,202 - main - INFO - AssemblyAI client initialized
+2026-02-02 00:18:23,490 - main - INFO - AssemblyAI client initialized
+2026-02-02 00:18:23,549 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:18:23,551 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:18:23,552 - main - INFO - Extracted 1 amounts: [10]
+2026-02-02 00:18:23,553 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:18:23,554 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:18:23,554 - main - INFO - Extracted 1 amounts: [100]
+2026-02-02 00:19:21,794 - main - INFO - AssemblyAI client initialized
+2026-02-02 00:20:07,145 - main - INFO - AssemblyAI client initialized
+2026-02-02 00:22:19,593 - main - INFO - AssemblyAI client initialized
+2026-02-02 00:22:19,643 - main - INFO - DEBUG: Set category to مواصلات for text: رحت جبت تسكرة قطر بخمسين جنيه
+2026-02-02 00:22:36,184 - main - INFO - AssemblyAI client initialized
+2026-02-02 00:22:36,240 - main - INFO - Extracted 4 amounts: [50, 10, 50, 100]
+2026-02-02 00:22:36,241 - main - INFO - Found amounts: [50, 10, 50, 100]
+2026-02-02 00:22:36,242 - main - INFO - Split into 6 segments: ['انا رحت كارفور', 'جبت حاجات بخمسين جنيه', 'جبت قهوة بعشر جنيه', 'رحت جبت تسكرة قطر بخمسين جنيه', 'ركبت القطر', 'كلت جوه للقطر حاجات بمية جنيه']
+2026-02-02 00:22:36,242 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:22:36,243 - main - INFO - DEBUG: Entering general category mapping for text: انا رحت كارفور
+2026-02-02 00:22:36,243 - main - INFO - DEBUG: Found category تسوق via general mapping for text: انا رحت كارفور
+2026-02-02 00:22:36,244 - main - INFO - Transaction 1: {'amount': 50, 'category': 'تسوق', 'item': None, 'place': 'كارفور', 'type': 'مصروف'}
+2026-02-02 00:22:36,244 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:22:36,245 - main - INFO - DEBUG: Entering general category mapping for text: جبت حاجات بخمسين جنيه
+2026-02-02 00:22:36,245 - main - INFO - DEBUG: Found category تسوق via general mapping for text: جبت حاجات بخمسين جنيه
+2026-02-02 00:22:36,245 - main - INFO - Transaction 2: {'amount': 50, 'category': 'تسوق', 'item': 'حاجات متنوعة', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:22:36,246 - main - INFO - Extracted 1 amounts: [10]
+2026-02-02 00:22:36,246 - main - INFO - DEBUG: Set category to طعام وشراب (coffee) for text: جبت قهوة بعشر جنيه
+2026-02-02 00:22:36,247 - main - INFO - Transaction 3: {'amount': 10, 'category': 'طعام وشراب', 'item': 'قهوة', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:22:36,247 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:22:36,247 - main - INFO - DEBUG: Set category to مواصلات for text: رحت جبت تسكرة قطر بخمسين جنيه
+2026-02-02 00:22:36,247 - main - INFO - Transaction 4: {'amount': 50, 'category': 'مواصلات', 'item': 'تذكرة قطار', 'place': 'القطار', 'type': 'مصروف'}
+2026-02-02 00:22:36,248 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:22:36,248 - main - INFO - DEBUG: Entering general category mapping for text: ركبت القطر
+2026-02-02 00:22:36,248 - main - INFO - DEBUG: Found category مواصلات via general mapping for text: ركبت القطر
+2026-02-02 00:22:36,249 - main - INFO - Transaction 5: {'amount': 100, 'category': 'مواصلات', 'item': None, 'place': 'القطار', 'type': 'مصروف'}
+2026-02-02 00:22:36,249 - main - INFO - Extracted 1 amounts: [100]
+2026-02-02 00:22:36,249 - main - INFO - DEBUG: Set category to طعام وشراب (eating in train) for text: كلت جوه للقطر حاجات بمية جنيه
+2026-02-02 00:22:36,250 - main - INFO - Transaction 6: {'amount': 100, 'category': 'طعام وشراب', 'item': 'حاجات متنوعة', 'place': 'القطار', 'type': 'مصروف'}
+2026-02-02 00:23:26,301 - main - INFO - AssemblyAI client initialized
+2026-02-02 00:23:26,353 - main - INFO - Extracted 4 amounts: [50, 10, 50, 100]
+2026-02-02 00:23:26,353 - main - INFO - Found amounts: [50, 10, 50, 100]
+2026-02-02 00:23:26,354 - main - INFO - Split into 6 segments: ['انا رحت كارفور', 'جبت حاجات بخمسين جنيه', 'جبت قهوة بعشر جنيه', 'رحت جبت تسكرة قطر بخمسين جنيه', 'ركبت القطر', 'كلت جوه للقطر حاجات بمية جنيه']
+2026-02-02 00:23:26,355 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:23:26,356 - main - INFO - Transaction 1: {'amount': 50, 'category': 'تسوق', 'item': None, 'place': 'كارفور', 'type': 'مصروف'}
+2026-02-02 00:23:26,357 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:23:26,357 - main - INFO - Transaction 2: {'amount': 50, 'category': 'تسوق', 'item': 'حاجات متنوعة', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:23:26,358 - main - INFO - Extracted 1 amounts: [10]
+2026-02-02 00:23:26,358 - main - INFO - Transaction 3: {'amount': 10, 'category': 'طعام وشراب', 'item': 'قهوة', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:23:26,359 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:23:26,360 - main - INFO - Transaction 4: {'amount': 50, 'category': 'مواصلات', 'item': 'تذكرة قطار', 'place': 'القطار', 'type': 'مصروف'}
+2026-02-02 00:23:26,360 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:23:26,361 - main - INFO - Transaction 5: {'amount': 100, 'category': 'مواصلات', 'item': None, 'place': 'القطار', 'type': 'مصروف'}
+2026-02-02 00:23:26,361 - main - INFO - Extracted 1 amounts: [100]
+2026-02-02 00:23:26,362 - main - INFO - Transaction 6: {'amount': 100, 'category': 'طعام وشراب', 'item': 'حاجات متنوعة', 'place': 'القطار', 'type': 'مصروف'}
+2026-02-02 00:24:44,700 - __main__ - INFO - AssemblyAI client initialized
+2026-02-02 00:24:44,805 - __main__ - INFO - Starting server on port 8000
+2026-02-02 00:24:44,864 - main - INFO - AssemblyAI client initialized
+2026-02-02 00:24:44,870 - main - INFO - Application startup
+2026-02-02 00:24:49,122 - main - INFO - Processing voice file: s.mp3
+2026-02-02 00:24:49,124 - main - INFO - Converting audio format...
+2026-02-02 00:24:49,355 - main - INFO - Transcribing audio using AssemblyAI...
+2026-02-02 00:24:52,366 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/upload "HTTP/1.1 200 OK"
+2026-02-02 00:24:52,616 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/transcript "HTTP/1.1 200 OK"
+2026-02-02 00:24:52,854 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/50fb414f-2012-4fa6-b682-01896ffafd77 "HTTP/1.1 200 OK"
+2026-02-02 00:24:56,742 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/50fb414f-2012-4fa6-b682-01896ffafd77 "HTTP/1.1 200 OK"
+2026-02-02 00:24:56,743 - main - INFO - Transcription: انا رحت كارفور وجبت حاجات بخمسين جنيه وجبت قهوة بعشر جنيه وبعدين رحت جبت تسكرة قطر بخمسين جنيه وركبت القطر وكلت جوه للقطر حاجات بمية جنيه
+2026-02-02 00:24:56,743 - main - INFO - Analyzing transcription...
+2026-02-02 00:24:56,745 - main - INFO - Extracted 4 amounts: [50, 10, 50, 100]
+2026-02-02 00:24:56,745 - main - INFO - Found amounts: [50, 10, 50, 100]
+2026-02-02 00:24:56,747 - main - INFO - Split into 6 segments: ['انا رحت كارفور', 'جبت حاجات بخمسين جنيه', 'جبت قهوة بعشر جنيه', 'رحت جبت تسكرة قطر بخمسين جنيه', 'ركبت القطر', 'كلت جوه للقطر حاجات بمية جنيه']
+2026-02-02 00:24:56,747 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:24:56,748 - main - INFO - Transaction 1: {'amount': 50, 'category': 'تسوق', 'item': None, 'place': 'كارفور', 'type': 'مصروف'}
+2026-02-02 00:24:56,749 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:24:56,749 - main - INFO - Transaction 2: {'amount': 50, 'category': 'تسوق', 'item': 'حاجات متنوعة', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:24:56,749 - main - INFO - Extracted 1 amounts: [10]
+2026-02-02 00:24:56,750 - main - INFO - Transaction 3: {'amount': 10, 'category': 'طعام وشراب', 'item': 'قهوة', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:24:56,750 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:24:56,750 - main - INFO - Transaction 4: {'amount': 50, 'category': 'مواصلات', 'item': 'تذكرة قطار', 'place': 'القطار', 'type': 'مصروف'}
+2026-02-02 00:24:56,751 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:24:56,751 - main - INFO - Transaction 5: {'amount': 100, 'category': 'مواصلات', 'item': None, 'place': 'القطار', 'type': 'مصروف'}
+2026-02-02 00:24:56,752 - main - INFO - Extracted 1 amounts: [100]
+2026-02-02 00:24:56,752 - main - INFO - Transaction 6: {'amount': 100, 'category': 'طعام وشراب', 'item': 'حاجات متنوعة', 'place': 'القطار', 'type': 'مصروف'}
+2026-02-02 00:24:56,752 - main - INFO - Voice analysis successful: {'total_amount': 210, 'transactions': [{'amount': 50, 'category': 'تسوق', 'item': None, 'place': 'كارفور', 'type': 'مصروف'}, {'amount': 50, 'category': 'تسوق', 'item': 'حاجات متنوعة', 'place': None, 'type': 'مصروف'}, {'amount': 10, 'category': 'طعام وشراب', 'item': 'قهوة', 'place': None, 'type': 'مصروف'}, {'amount': 50, 'category': 'مواصلات', 'item': 'تذكرة قطار', 'place': 'القطار', 'type': 'مصروف'}, {'amount': 100, 'category': 'مواصلات', 'item': None, 'place': 'القطار', 'type': 'مصروف'}, {'amount': 100, 'category': 'طعام وشراب', 'item': 'حاجات متنوعة', 'place': 'القطار', 'type': 'مصروف'}], 'summary': 'تم تسجيل 6 معاملة بإجمالي 210 جنيه'}
+2026-02-02 00:25:51,655 - main - INFO - AssemblyAI client initialized
+2026-02-02 00:25:51,705 - main - INFO - Extracted 4 amounts: [50, 10, 50, 100]
+2026-02-02 00:25:51,705 - main - INFO - Found amounts: [50, 10, 50, 100]
+2026-02-02 00:25:51,706 - main - INFO - Split into 6 segments: ['انا رحت كارفور', 'جبت حاجات بخمسين جنيه', 'جبت قهوة بعشر جنيه', 'رحت جبت تسكرة قطر بخمسين جنيه', 'ركبت القطر', 'كلت جوه للقطر حاجات بمية جنيه']
+2026-02-02 00:25:51,707 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:25:51,707 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:25:51,707 - main - INFO - Transaction 1: {'amount': 50, 'category': 'تسوق', 'item': 'حاجات متنوعة', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:25:51,708 - main - INFO - Extracted 1 amounts: [10]
+2026-02-02 00:25:51,708 - main - INFO - Transaction 2: {'amount': 10, 'category': 'طعام وشراب', 'item': 'قهوة', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:25:51,708 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:25:51,709 - main - INFO - Transaction 3: {'amount': 50, 'category': 'مواصلات', 'item': 'تذكرة قطار', 'place': 'القطار', 'type': 'مصروف'}
+2026-02-02 00:25:51,709 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:25:51,709 - main - INFO - Extracted 1 amounts: [100]
+2026-02-02 00:25:51,710 - main - INFO - Transaction 4: {'amount': 100, 'category': 'طعام وشراب', 'item': 'حاجات متنوعة', 'place': 'القطار', 'type': 'مصروف'}
+2026-02-02 00:26:12,297 - main - INFO - Application shutdown
+2026-02-02 00:26:14,413 - __main__ - INFO - AssemblyAI client initialized
+2026-02-02 00:26:14,507 - __main__ - INFO - Starting server on port 8000
+2026-02-02 00:26:14,566 - main - INFO - AssemblyAI client initialized
+2026-02-02 00:26:14,573 - main - INFO - Application startup
+2026-02-02 00:26:20,277 - main - INFO - Processing voice file: s.mp3
+2026-02-02 00:26:20,279 - main - INFO - Converting audio format...
+2026-02-02 00:26:20,501 - main - INFO - Transcribing audio using AssemblyAI...
+2026-02-02 00:26:24,330 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/upload "HTTP/1.1 200 OK"
+2026-02-02 00:26:24,586 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/transcript "HTTP/1.1 200 OK"
+2026-02-02 00:26:24,846 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/13bd2110-64f7-4be7-a637-9d786944e92f "HTTP/1.1 200 OK"
+2026-02-02 00:26:28,115 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/13bd2110-64f7-4be7-a637-9d786944e92f "HTTP/1.1 200 OK"
+2026-02-02 00:26:28,116 - main - INFO - Transcription: انا رحت كارفور وجبت حاجات بخمسين جنيه وجبت قهوة بعشر جنيه وبعدين رحت جبت تسكرة قطر بخمسين جنيه وركبت القطر وكلت جوه للقطر حاجات بمية جنيه
+2026-02-02 00:26:28,117 - main - INFO - Analyzing transcription...
+2026-02-02 00:26:28,118 - main - INFO - Extracted 4 amounts: [50, 10, 50, 100]
+2026-02-02 00:26:28,118 - main - INFO - Found amounts: [50, 10, 50, 100]
+2026-02-02 00:26:28,119 - main - INFO - Split into 6 segments: ['انا رحت كارفور', 'جبت حاجات بخمسين جنيه', 'جبت قهوة بعشر جنيه', 'رحت جبت تسكرة قطر بخمسين جنيه', 'ركبت القطر', 'كلت جوه للقطر حاجات بمية جنيه']
+2026-02-02 00:26:28,120 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:26:28,120 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:26:28,120 - main - INFO - Transaction 1: {'amount': 50, 'category': 'تسوق', 'item': 'حاجات متنوعة', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:26:28,121 - main - INFO - Extracted 1 amounts: [10]
+2026-02-02 00:26:28,121 - main - INFO - Transaction 2: {'amount': 10, 'category': 'طعام وشراب', 'item': 'قهوة', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:26:28,121 - main - INFO - Extracted 1 amounts: [50]
+2026-02-02 00:26:28,122 - main - INFO - Transaction 3: {'amount': 50, 'category': 'مواصلات', 'item': 'تذكرة قطار', 'place': 'القطار', 'type': 'مصروف'}
+2026-02-02 00:26:28,122 - main - INFO - Extracted 0 amounts: []
+2026-02-02 00:26:28,123 - main - INFO - Extracted 1 amounts: [100]
+2026-02-02 00:26:28,123 - main - INFO - Transaction 4: {'amount': 100, 'category': 'طعام وشراب', 'item': 'حاجات متنوعة', 'place': 'القطار', 'type': 'مصروف'}
+2026-02-02 00:26:28,123 - main - INFO - Voice analysis successful: {'total_amount': 210, 'transactions': [{'amount': 50, 'category': 'تسوق', 'item': 'حاجات متنوعة', 'place': None, 'type': 'مصروف'}, {'amount': 10, 'category': 'طعام وشراب', 'item': 'قهوة', 'place': None, 'type': 'مصروف'}, {'amount': 50, 'category': 'مواصلات', 'item': 'تذكرة قطار', 'place': 'القطار', 'type': 'مصروف'}, {'amount': 100, 'category': 'طعام وشراب', 'item': 'حاجات متنوعة', 'place': 'القطار', 'type': 'مصروف'}], 'summary': 'تم تسجيل 4 معاملة بإجمالي 210 جنيه'}
+2026-02-02 00:27:11,861 - main - INFO - Processing voice file: Standard recording 50.mp3
+2026-02-02 00:27:11,862 - main - INFO - Converting audio format...
+2026-02-02 00:27:12,072 - main - INFO - Transcribing audio using AssemblyAI...
+2026-02-02 00:27:14,086 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/upload "HTTP/1.1 200 OK"
+2026-02-02 00:27:14,373 - httpx - INFO - HTTP Request: POST https://api.assemblyai.com/v2/transcript "HTTP/1.1 200 OK"
+2026-02-02 00:27:14,607 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/db44bca6-defb-47f6-bd0f-4c7bdc80ab5f "HTTP/1.1 200 OK"
+2026-02-02 00:27:17,880 - httpx - INFO - HTTP Request: GET https://api.assemblyai.com/v2/transcript/db44bca6-defb-47f6-bd0f-4c7bdc80ab5f "HTTP/1.1 200 OK"
+2026-02-02 00:27:17,882 - main - INFO - Transcription: انا اشتريت 3 كيلو حشيش مبارح وبتاجر في المخدرات وجبت 100 جنيه بانجو من كرفور
+2026-02-02 00:27:17,882 - main - INFO - Analyzing transcription...
+2026-02-02 00:27:17,883 - main - INFO - Extracted 4 amounts: [3.0, 3.0, 100.0, 100.0]
+2026-02-02 00:27:17,883 - main - INFO - Found amounts: [3.0, 3.0, 100.0, 100.0]
+2026-02-02 00:27:17,884 - main - INFO - Split into 2 segments: ['انا اشتريت 3 كيلو حشيش مبارح وبتاجر في ا...', 'جبت 100 جنيه بانجو من كرفور']
+2026-02-02 00:27:17,884 - main - INFO - Extracted 2 amounts: [3.0, 3.0]
+2026-02-02 00:27:17,885 - main - INFO - Transaction 1: {'amount': 3.0, 'category': 'أخرى', 'item': 'المخدرات', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:27:17,885 - main - INFO - Extracted 2 amounts: [100.0, 100.0]
+2026-02-02 00:27:17,886 - main - INFO - Transaction 2: {'amount': 100.0, 'category': 'أخرى', 'item': 'كرفور', 'place': None, 'type': 'مصروف'}
+2026-02-02 00:27:17,886 - main - INFO - Voice analysis successful: {'total_amount': 206.0, 'transactions': [{'amount': 3.0, 'category': 'أخرى', 'item': 'المخدرات', 'place': None, 'type': 'مصروف'}, {'amount': 100.0, 'category': 'أخرى', 'item': 'كرفور', 'place': None, 'type': 'مصروف'}], 'summary': 'تم تسجيل 2 معاملة بإجمالي 206.0 جنيه'}
+2026-02-02 00:40:19,300 - main - INFO - Application shutdown
+{"timestamp": "2026-02-01T22:43:51.262364", "level": "INFO", "logger": "finance_analyzer.main", "message": "Starting Finance Analyzer on 0.0.0.0:8000", "module": "main", "function": "<module>", "line": 12}
+{"timestamp": "2026-02-01T22:43:52.806243", "level": "INFO", "logger": "finance_analyzer.main", "message": "🚀 Finance Analyzer starting up...", "module": "main", "function": "lifespan", "line": 32}
+{"timestamp": "2026-02-01T22:43:52.806589", "level": "INFO", "logger": "finance_analyzer.main", "message": "Environment: Development", "module": "main", "function": "lifespan", "line": 33}
+{"timestamp": "2026-02-01T22:43:52.806865", "level": "INFO", "logger": "finance_analyzer.main", "message": "Version: 1.0.0", "module": "main", "function": "lifespan", "line": 34}
+{"timestamp": "2026-02-01T22:43:55.151602", "level": "INFO", "logger": "finance_analyzer.middleware", "message": "Request started: GET /", "module": "middleware", "function": "dispatch", "line": 30}
+{"timestamp": "2026-02-01T22:43:55.156963", "level": "INFO", "logger": "finance_analyzer.middleware", "message": "HTTP request completed", "module": "logging", "function": "log_request", "line": 83}
+{"timestamp": "2026-02-01T22:43:58.846373", "level": "INFO", "logger": "finance_analyzer.middleware", "message": "Request started: POST /voice", "module": "middleware", "function": "dispatch", "line": 30}
+{"timestamp": "2026-02-01T22:43:58.851568", "level": "INFO", "logger": "finance_analyzer.api", "message": "Voice analysis request: Standard recording 50.mp3", "module": "endpoints", "function": "analyze_voice", "line": 159}
+{"timestamp": "2026-02-01T22:43:58.852119", "level": "INFO", "logger": "finance_analyzer.api", "message": "Processing audio file: {'filename': 'Standard recording 50.mp3', 'size_bytes': 344434, 'size_mb': 0.33, 'extension': '.mp3'}", "module": "endpoints", "function": "analyze_voice", "line": 173}
+{"timestamp": "2026-02-01T22:43:59.111630", "level": "INFO", "logger": "finance_analyzer.audio_service", "message": "Audio processed in 0.26s, duration: 8.59s", "module": "audio_service", "function": "process_audio_file", "line": 43}
+{"timestamp": "2026-02-01T22:43:59.112144", "level": "INFO", "logger": "finance_analyzer.transcription_service", "message": "Starting transcription for: C:\\Users\\YOUSSE~1\\AppData\\Local\\Temp\\finance_analyzer_axbdn8e0\\b817e4d53bcdff7bd2f534104cf9fb7c.mp3.wav", "module": "transcription_service", "function": "transcribe_audio", "line": 51}
+{"timestamp": "2026-02-01T22:44:11.727237", "level": "INFO", "logger": "finance_analyzer.transcription_service", "message": "Transcription completed in 12.61s, confidence: 0.77", "module": "transcription_service", "function": "transcribe_audio", "line": 70}
+{"timestamp": "2026-02-01T22:44:11.727806", "level": "INFO", "logger": "finance_analyzer.nlp_service", "message": "Analyzing text: انا اشتريت 3 كيلو حشيش مبارح وبتاجر في المخدرات وج...", "module": "nlp_service", "function": "analyze_text", "line": 251}
+{"timestamp": "2026-02-01T22:44:11.731209", "level": "INFO", "logger": "finance_analyzer.nlp_service", "message": "Analysis completed: 2 transactions, 3ms", "module": "nlp_service", "function": "analyze_text", "line": 319}
+{"timestamp": "2026-02-01T22:44:11.731687", "level": "INFO", "logger": "finance_analyzer.api", "message": "HTTP request completed", "module": "logging", "function": "log_request", "line": 83}
+{"timestamp": "2026-02-01T22:44:11.750416", "level": "INFO", "logger": "finance_analyzer.middleware", "message": "HTTP request completed", "module": "logging", "function": "log_request", "line": 83}
+{"timestamp": "2026-02-01T22:44:39.129968", "level": "INFO", "logger": "finance_analyzer.middleware", "message": "Request started: GET /health", "module": "middleware", "function": "dispatch", "line": 30}
+{"timestamp": "2026-02-01T22:44:39.131194", "level": "INFO", "logger": "finance_analyzer.middleware", "message": "HTTP request completed", "module": "logging", "function": "log_request", "line": 83}
+{"timestamp": "2026-02-01T22:44:59.661033", "level": "INFO", "logger": "finance_analyzer.middleware", "message": "Request started: GET /", "module": "middleware", "function": "dispatch", "line": 30}
+{"timestamp": "2026-02-01T22:44:59.663277", "level": "INFO", "logger": "finance_analyzer.middleware", "message": "HTTP request completed", "module": "logging", "function": "log_request", "line": 83}
+{"timestamp": "2026-02-01T22:45:02.658354", "level": "INFO", "logger": "finance_analyzer.middleware", "message": "Request started: POST /voice", "module": "middleware", "function": "dispatch", "line": 30}
+{"timestamp": "2026-02-01T22:45:02.665384", "level": "INFO", "logger": "finance_analyzer.api", "message": "Voice analysis request: s.mp3", "module": "endpoints", "function": "analyze_voice", "line": 159}
+{"timestamp": "2026-02-01T22:45:02.667033", "level": "INFO", "logger": "finance_analyzer.api", "message": "Processing audio file: {'filename': 's.mp3', 'size_bytes': 531953, 'size_mb': 0.51, 'extension': '.mp3'}", "module": "endpoints", "function": "analyze_voice", "line": 173}
+{"timestamp": "2026-02-01T22:45:02.958152", "level": "INFO", "logger": "finance_analyzer.audio_service", "message": "Audio processed in 0.29s, duration: 13.27s", "module": "audio_service", "function": "process_audio_file", "line": 43}
+{"timestamp": "2026-02-01T22:45:02.958705", "level": "INFO", "logger": "finance_analyzer.transcription_service", "message": "Starting transcription for: C:\\Users\\YOUSSE~1\\AppData\\Local\\Temp\\finance_analyzer_c0xpdxtw\\516234f81fea26279146a5d2e644950c.mp3.wav", "module": "transcription_service", "function": "transcribe_audio", "line": 51}
+{"timestamp": "2026-02-01T22:45:09.779641", "level": "INFO", "logger": "finance_analyzer.transcription_service", "message": "Transcription completed in 6.82s, confidence: 0.84", "module": "transcription_service", "function": "transcribe_audio", "line": 70}
+{"timestamp": "2026-02-01T22:45:09.781912", "level": "ERROR", "logger": "finance_analyzer.file_utils", "message": "Error creating temp file: 'NLPService' object is not subscriptable", "module": "file_utils", "function": "create_temp_file", "line": 54}
+{"timestamp": "2026-02-01T22:45:09.787493", "level": "ERROR", "logger": "finance_analyzer.api", "message": "Error occurred: 'NLPService' object is not subscriptable", "module": "logging", "function": "log_error", "line": 98, "exception": "Traceback (most recent call last):\n  File \"E:\\Projects\\ai\\voice-finance-analyzer\\app\\api\\endpoints.py\", line 201, in analyze_voice\n    analysis_result = await nlp_service.analyze_text(transcription)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\Projects\\ai\\voice-finance-analyzer\\app\\utils\\cache.py\", line 148, in wrapper\n    logger.info(f\"Returning cached analysis for text: {text[:30]}...\")\n                                                       ~~~~^^^^^\nTypeError: 'NLPService' object is not subscriptable"}
+{"timestamp": "2026-02-01T22:45:09.837455", "level": "ERROR", "logger": "finance_analyzer.middleware", "message": "Request failed: POST /voice", "module": "middleware", "function": "dispatch", "line": 63, "exception": "Traceback (most recent call last):\n  File \"E:\\Projects\\ai\\voice-finance-analyzer\\app\\api\\endpoints.py\", line 201, in analyze_voice\n    analysis_result = await nlp_service.analyze_text(transcription)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\Projects\\ai\\voice-finance-analyzer\\app\\utils\\cache.py\", line 148, in wrapper\n    logger.info(f\"Returning cached analysis for text: {text[:30]}...\")\n                                                       ~~~~^^^^^\nTypeError: 'NLPService' object is not subscriptable\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\_exception_handler.py\", line 42, in wrapped_app\n    await app(scope, receive, sender)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\fastapi\\routing.py\", line 101, in app\n    response = await f(request)\n               ^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\fastapi\\routing.py\", line 355, in app\n    raw_response = await run_endpoint_function(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<3 lines>...\n    )\n    ^\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\fastapi\\routing.py\", line 243, in run_endpoint_function\n    return await dependant.call(**values)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\Projects\\ai\\voice-finance-analyzer\\app\\api\\endpoints.py\", line 276, in analyze_voice\n    raise HTTPException(\n    ...<5 lines>...\n    )\nfastapi.exceptions.HTTPException: 500: {'error': 'internal_error', 'message': 'An unexpected error occurred'}\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"E:\\Projects\\ai\\voice-finance-analyzer\\app\\middleware.py\", line 44, in dispatch\n    response = await call_next(request)\n               ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\middleware\\base.py\", line 168, in call_next\n    raise app_exc from app_exc.__cause__ or app_exc.__context__\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\middleware\\base.py\", line 144, in coro\n    await self.app(scope, receive_or_disconnect, send_no_error)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\middleware\\exceptions.py\", line 63, in __call__\n    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\_exception_handler.py\", line 53, in wrapped_app\n    raise exc\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\_exception_handler.py\", line 42, in wrapped_app\n    await app(scope, receive, sender)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\fastapi\\middleware\\asyncexitstack.py\", line 18, in __call__\n    await self.app(scope, receive, send)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\routing.py\", line 716, in __call__\n    await self.middleware_stack(scope, receive, send)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\routing.py\", line 736, in app\n    await route.handle(scope, receive, send)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\routing.py\", line 290, in handle\n    await self.app(scope, receive, send)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\fastapi\\routing.py\", line 115, in app\n    await wrap_app_handling_exceptions(app, request)(scope, receive, send)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\_exception_handler.py\", line 59, in wrapped_app\n    response = await handler(conn, exc)\n               ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\Projects\\ai\\voice-finance-analyzer\\app\\main.py\", line 140, in http_exception_handler\n    return JSONResponse(\n        status_code=exc.status_code,\n        content=ErrorResponse(error=error_detail).dict()\n    )\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\responses.py\", line 189, in __init__\n    super().__init__(content, status_code, headers, media_type, background)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\responses.py\", line 46, in __init__\n    self.body = self.render(content)\n                ~~~~~~~~~~~^^^^^^^^^\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\responses.py\", line 192, in render\n    return json.dumps(\n           ~~~~~~~~~~^\n        content,\n        ^^^^^^^^\n    ...<3 lines>...\n        separators=(\",\", \":\"),\n        ^^^^^^^^^^^^^^^^^^^^^^\n    ).encode(\"utf-8\")\n    ^\n  File \"C:\\Python314\\Lib\\json\\__init__.py\", line 238, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"C:\\Python314\\Lib\\json\\encoder.py\", line 200, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"C:\\Python314\\Lib\\json\\encoder.py\", line 261, in iterencode\n    return _iterencode(o, 0)\n  File \"C:\\Python314\\Lib\\json\\encoder.py\", line 180, in default\n    raise TypeError(f'Object of type {o.__class__.__name__} '\n                    f'is not JSON serializable')\nTypeError: Object of type datetime is not JSON serializable\nwhen serializing dict item 'timestamp'"}
+{"timestamp": "2026-02-01T22:45:09.903755", "level": "ERROR", "logger": "finance_analyzer.main", "message": "Unexpected error: Object of type datetime is not JSON serializable", "module": "main", "function": "general_exception_handler", "line": 149, "exception": "Traceback (most recent call last):\n  File \"E:\\Projects\\ai\\voice-finance-analyzer\\app\\api\\endpoints.py\", line 201, in analyze_voice\n    analysis_result = await nlp_service.analyze_text(transcription)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\Projects\\ai\\voice-finance-analyzer\\app\\utils\\cache.py\", line 148, in wrapper\n    logger.info(f\"Returning cached analysis for text: {text[:30]}...\")\n                                                       ~~~~^^^^^\nTypeError: 'NLPService' object is not subscriptable\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\_exception_handler.py\", line 42, in wrapped_app\n    await app(scope, receive, sender)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\fastapi\\routing.py\", line 101, in app\n    response = await f(request)\n               ^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\fastapi\\routing.py\", line 355, in app\n    raw_response = await run_endpoint_function(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<3 lines>...\n    )\n    ^\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\fastapi\\routing.py\", line 243, in run_endpoint_function\n    return await dependant.call(**values)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\Projects\\ai\\voice-finance-analyzer\\app\\api\\endpoints.py\", line 276, in analyze_voice\n    raise HTTPException(\n    ...<5 lines>...\n    )\nfastapi.exceptions.HTTPException: 500: {'error': 'internal_error', 'message': 'An unexpected error occurred'}\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\middleware\\errors.py\", line 164, in __call__\n    await self.app(scope, receive, _send)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\middleware\\gzip.py\", line 29, in __call__\n    await responder(scope, receive, send)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\middleware\\gzip.py\", line 130, in __call__\n    await super().__call__(scope, receive, send)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\middleware\\gzip.py\", line 46, in __call__\n    await self.app(scope, receive, self.send_with_compression)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\middleware\\cors.py\", line 93, in __call__\n    await self.simple_response(scope, receive, send, request_headers=headers)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\middleware\\cors.py\", line 144, in simple_response\n    await self.app(scope, receive, send)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\middleware\\base.py\", line 191, in __call__\n    with recv_stream, send_stream, collapse_excgroups():\n                                   ~~~~~~~~~~~~~~~~~~^^\n  File \"C:\\Python314\\Lib\\contextlib.py\", line 162, in __exit__\n    self.gen.throw(value)\n    ~~~~~~~~~~~~~~^^^^^^^\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\_utils.py\", line 85, in collapse_excgroups\n    raise exc\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\middleware\\base.py\", line 193, in __call__\n    response = await self.dispatch_func(request, call_next)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\Projects\\ai\\voice-finance-analyzer\\app\\middleware.py\", line 85, in dispatch\n    response = await call_next(request)\n               ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\middleware\\base.py\", line 168, in call_next\n    raise app_exc from app_exc.__cause__ or app_exc.__context__\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\middleware\\base.py\", line 144, in coro\n    await self.app(scope, receive_or_disconnect, send_no_error)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\middleware\\base.py\", line 191, in __call__\n    with recv_stream, send_stream, collapse_excgroups():\n                                   ~~~~~~~~~~~~~~~~~~^^\n  File \"C:\\Python314\\Lib\\contextlib.py\", line 162, in __exit__\n    self.gen.throw(value)\n    ~~~~~~~~~~~~~~^^^^^^^\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\_utils.py\", line 85, in collapse_excgroups\n    raise exc\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\middleware\\base.py\", line 193, in __call__\n    response = await self.dispatch_func(request, call_next)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\Projects\\ai\\voice-finance-analyzer\\app\\middleware.py\", line 44, in dispatch\n    response = await call_next(request)\n               ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\middleware\\base.py\", line 168, in call_next\n    raise app_exc from app_exc.__cause__ or app_exc.__context__\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\middleware\\base.py\", line 144, in coro\n    await self.app(scope, receive_or_disconnect, send_no_error)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\middleware\\exceptions.py\", line 63, in __call__\n    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\_exception_handler.py\", line 53, in wrapped_app\n    raise exc\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\_exception_handler.py\", line 42, in wrapped_app\n    await app(scope, receive, sender)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\fastapi\\middleware\\asyncexitstack.py\", line 18, in __call__\n    await self.app(scope, receive, send)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\routing.py\", line 716, in __call__\n    await self.middleware_stack(scope, receive, send)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\routing.py\", line 736, in app\n    await route.handle(scope, receive, send)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\routing.py\", line 290, in handle\n    await self.app(scope, receive, send)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\fastapi\\routing.py\", line 115, in app\n    await wrap_app_handling_exceptions(app, request)(scope, receive, send)\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\_exception_handler.py\", line 59, in wrapped_app\n    response = await handler(conn, exc)\n               ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\Projects\\ai\\voice-finance-analyzer\\app\\main.py\", line 140, in http_exception_handler\n    return JSONResponse(\n        status_code=exc.status_code,\n        content=ErrorResponse(error=error_detail).dict()\n    )\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\responses.py\", line 189, in __init__\n    super().__init__(content, status_code, headers, media_type, background)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\responses.py\", line 46, in __init__\n    self.body = self.render(content)\n                ~~~~~~~~~~~^^^^^^^^^\n  File \"C:\\Users\\YOUSSEF MOHAMED\\AppData\\Roaming\\Python\\Python314\\site-packages\\starlette\\responses.py\", line 192, in render\n    return json.dumps(\n           ~~~~~~~~~~^\n        content,\n        ^^^^^^^^\n    ...<3 lines>...\n        separators=(\",\", \":\"),\n        ^^^^^^^^^^^^^^^^^^^^^^\n    ).encode(\"utf-8\")\n    ^\n  File \"C:\\Python314\\Lib\\json\\__init__.py\", line 238, in dumps\n    **kw).encode(obj)\n          ~~~~~~^^^^^\n  File \"C:\\Python314\\Lib\\json\\encoder.py\", line 200, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n  File \"C:\\Python314\\Lib\\json\\encoder.py\", line 261, in iterencode\n    return _iterencode(o, 0)\n  File \"C:\\Python314\\Lib\\json\\encoder.py\", line 180, in default\n    raise TypeError(f'Object of type {o.__class__.__name__} '\n                    f'is not JSON serializable')\nTypeError: Object of type datetime is not JSON serializable\nwhen serializing dict item 'timestamp'"}
+{"timestamp": "2026-02-01T22:45:11.053605", "level": "INFO", "logger": "finance_analyzer.main", "message": "🛑 Finance Analyzer shutting down...", "module": "main", "function": "lifespan", "line": 38}
+{"timestamp": "2026-02-01T22:45:11.054555", "level": "INFO", "logger": "finance_analyzer.main", "message": "✅ Cleanup completed successfully", "module": "main", "function": "lifespan", "line": 45}
+{"timestamp": "2026-02-01T22:45:12.929437", "level": "INFO", "logger": "finance_analyzer.main", "message": "🚀 Finance Analyzer starting up...", "module": "main", "function": "lifespan", "line": 32}
+{"timestamp": "2026-02-01T22:45:12.929876", "level": "INFO", "logger": "finance_analyzer.main", "message": "Environment: Development", "module": "main", "function": "lifespan", "line": 33}
+{"timestamp": "2026-02-01T22:45:12.930383", "level": "INFO", "logger": "finance_analyzer.main", "message": "Version: 1.0.0", "module": "main", "function": "lifespan", "line": 34}
+{"timestamp": "2026-02-01T22:45:21.386351", "level": "INFO", "logger": "finance_analyzer.main", "message": "🛑 Finance Analyzer shutting down...", "module": "main", "function": "lifespan", "line": 38}
+{"timestamp": "2026-02-01T22:45:21.386856", "level": "INFO", "logger": "finance_analyzer.main", "message": "✅ Cleanup completed successfully", "module": "main", "function": "lifespan", "line": 45}
+{"timestamp": "2026-02-01T22:45:23.069554", "level": "INFO", "logger": "finance_analyzer.main", "message": "🚀 Finance Analyzer starting up...", "module": "main", "function": "lifespan", "line": 32}
+{"timestamp": "2026-02-01T22:45:23.069845", "level": "INFO", "logger": "finance_analyzer.main", "message": "Environment: Development", "module": "main", "function": "lifespan", "line": 33}
+{"timestamp": "2026-02-01T22:45:23.070067", "level": "INFO", "logger": "finance_analyzer.main", "message": "Version: 1.0.0", "module": "main", "function": "lifespan", "line": 34}
+{"timestamp": "2026-02-01T22:45:43.851358", "level": "INFO", "logger": "finance_analyzer.main", "message": "🛑 Finance Analyzer shutting down...", "module": "main", "function": "lifespan", "line": 38}
+{"timestamp": "2026-02-01T22:45:43.851752", "level": "INFO", "logger": "finance_analyzer.main", "message": "✅ Cleanup completed successfully", "module": "main", "function": "lifespan", "line": 45}
+{"timestamp": "2026-02-01T22:45:45.412896", "level": "INFO", "logger": "finance_analyzer.main", "message": "🚀 Finance Analyzer starting up...", "module": "main", "function": "lifespan", "line": 32}
+{"timestamp": "2026-02-01T22:45:45.413606", "level": "INFO", "logger": "finance_analyzer.main", "message": "Environment: Development", "module": "main", "function": "lifespan", "line": 33}
+{"timestamp": "2026-02-01T22:45:45.414366", "level": "INFO", "logger": "finance_analyzer.main", "message": "Version: 1.0.0", "module": "main", "function": "lifespan", "line": 34}
+{"timestamp": "2026-02-01T22:45:51.018449", "level": "INFO", "logger": "finance_analyzer.main", "message": "🛑 Finance Analyzer shutting down...", "module": "main", "function": "lifespan", "line": 38}
+{"timestamp": "2026-02-01T22:45:51.018907", "level": "INFO", "logger": "finance_analyzer.main", "message": "✅ Cleanup completed successfully", "module": "main", "function": "lifespan", "line": 45}
+{"timestamp": "2026-02-01T22:45:53.220934", "level": "INFO", "logger": "finance_analyzer.main", "message": "🚀 Finance Analyzer starting up...", "module": "main", "function": "lifespan", "line": 32}
+{"timestamp": "2026-02-01T22:45:53.221452", "level": "INFO", "logger": "finance_analyzer.main", "message": "Environment: Development", "module": "main", "function": "lifespan", "line": 33}
+{"timestamp": "2026-02-01T22:45:53.221812", "level": "INFO", "logger": "finance_analyzer.main", "message": "Version: 1.0.0", "module": "main", "function": "lifespan", "line": 34}
+{"timestamp": "2026-02-01T22:45:58.413496", "level": "INFO", "logger": "finance_analyzer.main", "message": "🛑 Finance Analyzer shutting down...", "module": "main", "function": "lifespan", "line": 38}
+{"timestamp": "2026-02-01T22:45:58.414105", "level": "INFO", "logger": "finance_analyzer.main", "message": "✅ Cleanup completed successfully", "module": "main", "function": "lifespan", "line": 45}
+{"timestamp": "2026-02-01T22:46:00.041636", "level": "INFO", "logger": "finance_analyzer.main", "message": "🚀 Finance Analyzer starting up...", "module": "main", "function": "lifespan", "line": 32}
+{"timestamp": "2026-02-01T22:46:00.041952", "level": "INFO", "logger": "finance_analyzer.main", "message": "Environment: Development", "module": "main", "function": "lifespan", "line": 33}
+{"timestamp": "2026-02-01T22:46:00.042217", "level": "INFO", "logger": "finance_analyzer.main", "message": "Version: 1.0.0", "module": "main", "function": "lifespan", "line": 34}
+{"timestamp": "2026-02-01T22:46:07.488409", "level": "INFO", "logger": "finance_analyzer.main", "message": "🛑 Finance Analyzer shutting down...", "module": "main", "function": "lifespan", "line": 38}
+{"timestamp": "2026-02-01T22:46:07.488861", "level": "INFO", "logger": "finance_analyzer.main", "message": "✅ Cleanup completed successfully", "module": "main", "function": "lifespan", "line": 45}
+{"timestamp": "2026-02-01T22:46:10.191285", "level": "INFO", "logger": "finance_analyzer.main", "message": "Starting Finance Analyzer on 0.0.0.0:8000", "module": "main", "function": "<module>", "line": 12}
+{"timestamp": "2026-02-01T22:46:11.676638", "level": "INFO", "logger": "finance_analyzer.main", "message": "🚀 Finance Analyzer starting up...", "module": "main", "function": "lifespan", "line": 32}
+{"timestamp": "2026-02-01T22:46:11.676964", "level": "INFO", "logger": "finance_analyzer.main", "message": "Environment: Development", "module": "main", "function": "lifespan", "line": 33}
+{"timestamp": "2026-02-01T22:46:11.677339", "level": "INFO", "logger": "finance_analyzer.main", "message": "Version: 1.0.0", "module": "main", "function": "lifespan", "line": 34}
+{"timestamp": "2026-02-01T22:46:12.356129", "level": "INFO", "logger": "finance_analyzer.middleware", "message": "Request started: GET /", "module": "middleware", "function": "dispatch", "line": 30}
+{"timestamp": "2026-02-01T22:46:12.363962", "level": "INFO", "logger": "finance_analyzer.middleware", "message": "HTTP request completed", "module": "logging", "function": "log_request", "line": 83}
+{"timestamp": "2026-02-01T22:46:15.040614", "level": "INFO", "logger": "finance_analyzer.middleware", "message": "Request started: POST /voice", "module": "middleware", "function": "dispatch", "line": 30}
+{"timestamp": "2026-02-01T22:46:15.045098", "level": "INFO", "logger": "finance_analyzer.api", "message": "Voice analysis request: s.mp3", "module": "endpoints", "function": "analyze_voice", "line": 159}
+{"timestamp": "2026-02-01T22:46:15.046100", "level": "INFO", "logger": "finance_analyzer.api", "message": "Processing audio file: {'filename': 's.mp3', 'size_bytes': 531953, 'size_mb': 0.51, 'extension': '.mp3'}", "module": "endpoints", "function": "analyze_voice", "line": 173}
+{"timestamp": "2026-02-01T22:46:15.298114", "level": "INFO", "logger": "finance_analyzer.audio_service", "message": "Audio processed in 0.25s, duration: 13.27s", "module": "audio_service", "function": "process_audio_file", "line": 43}
+{"timestamp": "2026-02-01T22:46:15.298804", "level": "INFO", "logger": "finance_analyzer.transcription_service", "message": "Starting transcription for: C:\\Users\\YOUSSE~1\\AppData\\Local\\Temp\\finance_analyzer_sg_sc2l6\\f1f6ca970d78938bc3368b7bb835c247.mp3.wav", "module": "transcription_service", "function": "transcribe_audio", "line": 52}
+{"timestamp": "2026-02-01T22:46:32.331700", "level": "INFO", "logger": "finance_analyzer.transcription_service", "message": "Transcription completed in 17.03s, confidence: 0.84", "module": "transcription_service", "function": "transcribe_audio", "line": 81}
+{"timestamp": "2026-02-01T22:46:32.332448", "level": "INFO", "logger": "finance_analyzer.nlp_service", "message": "Analyzing text: انا رحت كارفور وجبت حاجات بخمسين جنيه وجبت قهوة بع...", "module": "nlp_service", "function": "analyze_text", "line": 252}
+{"timestamp": "2026-02-01T22:46:32.335900", "level": "INFO", "logger": "finance_analyzer.nlp_service", "message": "Analysis completed: 4 transactions, 3ms", "module": "nlp_service", "function": "analyze_text", "line": 357}
+{"timestamp": "2026-02-01T22:46:32.336354", "level": "INFO", "logger": "finance_analyzer.api", "message": "HTTP request completed", "module": "logging", "function": "log_request", "line": 83}
+{"timestamp": "2026-02-01T22:46:32.341145", "level": "INFO", "logger": "finance_analyzer.middleware", "message": "HTTP request completed", "module": "logging", "function": "log_request", "line": 83}
+{"timestamp": "2026-02-01T22:46:51.234736", "level": "INFO", "logger": "finance_analyzer.main", "message": "🛑 Finance Analyzer shutting down...", "module": "main", "function": "lifespan", "line": 38}
+{"timestamp": "2026-02-01T22:46:51.235672", "level": "INFO", "logger": "finance_analyzer.main", "message": "✅ Cleanup completed successfully", "module": "main", "function": "lifespan", "line": 45}
+{"timestamp": "2026-02-01T22:46:52.953880", "level": "INFO", "logger": "finance_analyzer.main", "message": "🚀 Finance Analyzer starting up...", "module": "main", "function": "lifespan", "line": 32}
+{"timestamp": "2026-02-01T22:46:52.954268", "level": "INFO", "logger": "finance_analyzer.main", "message": "Environment: Development", "module": "main", "function": "lifespan", "line": 33}
+{"timestamp": "2026-02-01T22:46:52.954792", "level": "INFO", "logger": "finance_analyzer.main", "message": "Version: 1.0.0", "module": "main", "function": "lifespan", "line": 34}
+{"timestamp": "2026-02-01T22:58:33.329681", "level": "INFO", "logger": "finance_analyzer.main", "message": "🛑 Finance Analyzer shutting down...", "module": "main", "function": "lifespan", "line": 38}
+{"timestamp": "2026-02-01T22:58:33.330228", "level": "INFO", "logger": "finance_analyzer.main", "message": "✅ Cleanup completed successfully", "module": "main", "function": "lifespan", "line": 45}
