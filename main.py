@@ -19,9 +19,9 @@ if not GROQ_KEY:
 
 groq_client = Groq(api_key=GROQ_KEY)
 
-# ---------- Setup FFmpeg & FFprobe (Railway compatible) ----------
-AudioSegment.converter = "/usr/bin/ffmpeg"
-AudioSegment.ffprobe = "/usr/bin/ffprobe"
+# ---------- Setup FFmpeg & FFprobe (Windows) ----------
+AudioSegment.converter = r"C:\ffmpeg\bin\ffmpeg.exe"
+AudioSegment.ffprobe = r"C:\ffmpeg\bin\ffprobe.exe"
 
 # ---------- App ----------
 app = FastAPI(title="Voice & Text Finance Analyzer")
@@ -46,7 +46,7 @@ def home(request: Request):
 class TextInput(BaseModel):
     text: str
 
-# ---------- AI Prompt (Dynamic Category Creation) ----------
+# ---------- AI Prompt ----------
 FINANCE_PROMPT = """
 You are a financial analysis AI.
 
@@ -89,6 +89,7 @@ def analyze_text(input: TextInput):
         return {"analysis": parsed}
 
     except Exception as e:
+        print("Text analyze error:", e)
         raise HTTPException(status_code=500, detail=str(e))
 
 # ---------- Voice Analyze ----------
@@ -99,8 +100,13 @@ async def analyze_voice(file: UploadFile = File(...)):
         if not audio_bytes:
             raise HTTPException(status_code=400, detail="Empty audio")
 
+        # Detect format automatically from filename
+        ext = os.path.splitext(file.filename)[1].lower()[1:]  # e.g., "wav", "mp3", "webm"
+        if ext not in ["wav", "mp3", "ogg", "webm", "m4a"]:
+            raise HTTPException(status_code=400, detail=f"Unsupported audio format: {ext}")
+
         # Convert audio → WAV mono 16kHz
-        audio = AudioSegment.from_file(io.BytesIO(audio_bytes))
+        audio = AudioSegment.from_file(io.BytesIO(audio_bytes), format=ext)
         audio = audio.set_channels(1).set_frame_rate(16000)
 
         buffer = io.BytesIO()
@@ -137,10 +143,11 @@ async def analyze_voice(file: UploadFile = File(...)):
         }
 
     except Exception as e:
+        print("Voice analyze error:", e)
         raise HTTPException(status_code=500, detail=str(e))
 
 # ---------- Run Server ----------
 if __name__ == "__main__":
     import uvicorn
     port = int(os.environ.get("PORT", 8000))
-    uvicorn.run("main:app", host="0.0.0.0", port=port)
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)
