@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from groq import Groq
 from pydub import AudioSegment
+from pydub.utils import mediainfo
 
 # ---------- Load ENV ----------
 load_dotenv()
@@ -100,13 +101,18 @@ async def analyze_voice(file: UploadFile = File(...)):
         if not audio_bytes:
             raise HTTPException(status_code=400, detail="Empty audio")
 
-        # Detect format automatically from filename
-        ext = os.path.splitext(file.filename)[1].lower()[1:]  # e.g., "wav", "mp3", "webm"
-        if ext not in ["wav", "mp3", "ogg", "webm", "m4a"]:
-            raise HTTPException(status_code=400, detail=f"Unsupported audio format: {ext}")
+        # حاول تحدد الفورمات تلقائيًا
+        try:
+            info = mediainfo(io.BytesIO(audio_bytes))
+            format = info.get('format_name', None)
+            if not format:
+                # fallback للامتداد
+                format = os.path.splitext(file.filename)[1].lower()[1:]
+        except Exception:
+            format = os.path.splitext(file.filename)[1].lower()[1:]
 
-        # Convert audio → WAV mono 16kHz
-        audio = AudioSegment.from_file(io.BytesIO(audio_bytes), format=ext)
+        # تحويل الصوت → WAV mono 16kHz
+        audio = AudioSegment.from_file(io.BytesIO(audio_bytes), format=format)
         audio = audio.set_channels(1).set_frame_rate(16000)
 
         buffer = io.BytesIO()
